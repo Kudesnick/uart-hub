@@ -25,6 +25,7 @@
 
 #include "cpp_os.h"
 #include "bsp_cdc.h"
+#include "Driver_USART.h"
 
 #ifdef __cplusplus
     using namespace std;
@@ -54,6 +55,17 @@
  *                                      EXTERNAL DATA
  **************************************************************************************************/
 
+extern ARM_DRIVER_USART Driver_USART1;
+extern ARM_DRIVER_USART Driver_USART2;
+extern ARM_DRIVER_USART Driver_USART3;
+extern ARM_DRIVER_USART Driver_USART4;
+extern ARM_DRIVER_USART Driver_USART5;
+extern ARM_DRIVER_USART Driver_USART6;
+extern ARM_DRIVER_USART Driver_USART7;
+extern ARM_DRIVER_USART Driver_USART8;
+extern ARM_DRIVER_USART Driver_USART9;
+extern ARM_DRIVER_USART Driver_USART10;
+
 /***************************************************************************************************
  *                              EXTERNAL FUNCTION PROTOTYPES
  **************************************************************************************************/
@@ -61,6 +73,12 @@
 /***************************************************************************************************
  *                                    PRIVATE FUNCTIONS
  **************************************************************************************************/
+
+static void _usart_event(uint32_t _event)
+{
+    printf("<cdc> usart event %x08", _event);
+}
+
 
 class : public cpp_os_timer
 {
@@ -109,6 +127,31 @@ private:
     void thread_func(void)
     {
         cdc.start();
+        
+        uint32_t usart_err;
+        
+        usart_err = Driver_USART1.Initialize(_usart_event);
+        if (usart_err != ARM_DRIVER_OK)
+        {
+            printf("<cdc> usart Initialize error: %x08", usart_err);
+        }
+        
+        usart_err = Driver_USART1.PowerControl(ARM_POWER_FULL);
+        if (usart_err != ARM_DRIVER_OK)
+        {
+            printf("<cdc> usart PowerControl error: %x08", usart_err);
+        }
+ 
+        usart_err = Driver_USART1.Control(ARM_USART_MODE_ASYNCHRONOUS |
+                              ARM_USART_DATA_BITS_8       |
+                              ARM_USART_PARITY_NONE       |
+                              ARM_USART_STOP_BITS_1       |
+                              ARM_USART_MODE_SINGLE_WIRE  |
+                              ARM_USART_FLOW_CONTROL_NONE, 9600);
+        if (usart_err != ARM_DRIVER_OK)
+        {
+            printf("<cdc> usart Control error: %x08", usart_err);
+        }
 
         for (;;)
         {
@@ -129,6 +172,8 @@ private:
             }
 
             printf("<cdc> echo: %s\r\n", buf);
+            
+            Driver_USART1.Send(buf, len);
         }
     }
 
