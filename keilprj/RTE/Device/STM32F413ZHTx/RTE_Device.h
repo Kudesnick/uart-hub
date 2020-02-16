@@ -935,9 +935,9 @@
 //     <i>  Selects DMA Priority
 //   </e>
 #define RTE_UART9_TX_DMA                1
-#define RTE_UART9_TX_DMA_NUMBER         1
+#define RTE_UART9_TX_DMA_NUMBER         2
 #define RTE_UART9_TX_DMA_STREAM         0
-#define RTE_UART9_TX_DMA_CHANNEL        5
+#define RTE_UART9_TX_DMA_CHANNEL        1
 #define RTE_UART9_TX_DMA_PRIORITY       0
 
 // </e>
@@ -1005,9 +1005,9 @@
 //     <i>  Selects DMA Priority
 //   </e>
 #define RTE_UART10_TX_DMA               1
-#define RTE_UART10_TX_DMA_NUMBER        1
-#define RTE_UART10_TX_DMA_STREAM        0
-#define RTE_UART10_TX_DMA_CHANNEL       5
+#define RTE_UART10_TX_DMA_NUMBER        2
+#define RTE_UART10_TX_DMA_STREAM        3
+#define RTE_UART10_TX_DMA_CHANNEL       9
 #define RTE_UART10_TX_DMA_PRIORITY      0
 
 // </e>
