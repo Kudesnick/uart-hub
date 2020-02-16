@@ -41,15 +41,14 @@
 #define GPIO_PORT10     GPIOK
 
 #define GPIO_PORT(num)  GPIO_PORT##num
-#define GPIO_PIN(num)   (1U << num)
 
 
 // <e> USART1 (Universal synchronous asynchronous receiver transmitter) [Driver_USART1]
 // <i> Configuration settings for Driver_USART1 in component ::CMSIS Driver:USART
-#define RTE_USART1                      0
+#define RTE_USART1                      1
 
 //   <o> USART1_TX Pin <0=>Not Used <1=>PA9 <2=>PA15 <3=>PB6
-#define RTE_USART1_TX_ID                0
+#define RTE_USART1_TX_ID                2
 #if    (RTE_USART1_TX_ID == 0)
 #define RTE_USART1_TX                   0
 #elif  (RTE_USART1_TX_ID == 1)
@@ -150,7 +149,7 @@
 //     <o4> Priority <0=>Low <1=>Medium <2=>High <3=>Very High
 //     <i>  Selects DMA Priority
 //   </e>
-#define RTE_USART1_TX_DMA               0
+#define RTE_USART1_TX_DMA               1
 #define RTE_USART1_TX_DMA_NUMBER        2
 #define RTE_USART1_TX_DMA_STREAM        7
 #define RTE_USART1_TX_DMA_CHANNEL       4
@@ -161,10 +160,10 @@
 
 // <e> USART2 (Universal synchronous asynchronous receiver transmitter) [Driver_USART2]
 // <i> Configuration settings for Driver_USART2 in component ::CMSIS Driver:USART
-#define RTE_USART2                      0
+#define RTE_USART2                      1
 
 //   <o> USART2_TX Pin <0=>Not Used <1=>PA2 <2=>PD5
-#define RTE_USART2_TX_ID                0
+#define RTE_USART2_TX_ID                1
 #if    (RTE_USART2_TX_ID == 0)
 #define RTE_USART2_TX                   0
 #elif  (RTE_USART2_TX_ID == 1)
@@ -269,7 +268,7 @@
 //     <o4> Priority <0=>Low <1=>Medium <2=>High <3=>Very High
 //     <i>  Selects DMA Priority
 //   </e>
-#define RTE_USART2_TX_DMA               0
+#define RTE_USART2_TX_DMA               1
 #define RTE_USART2_TX_DMA_NUMBER        1
 #define RTE_USART2_TX_DMA_STREAM        6
 #define RTE_USART2_TX_DMA_CHANNEL       4
@@ -280,10 +279,10 @@
 
 // <e> USART3 (Universal synchronous asynchronous receiver transmitter) [Driver_USART3]
 // <i> Configuration settings for Driver_USART3 in component ::CMSIS Driver:USART
-#define RTE_USART3                      0
+#define RTE_USART3                      1
 
 //   <o> USART3_TX Pin <0=>Not Used <1=>PB10 <2=>PC10 <3=>PD8
-#define RTE_USART3_TX_ID                0
+#define RTE_USART3_TX_ID                2
 #if    (RTE_USART3_TX_ID == 0)
 #define RTE_USART3_TX                   0
 #elif  (RTE_USART3_TX_ID == 1)
@@ -404,7 +403,7 @@
 //     <o4> Priority <0=>Low <1=>Medium <2=>High <3=>Very High
 //     <i>  Selects DMA Priority
 //   </e>
-#define RTE_USART3_TX_DMA               0
+#define RTE_USART3_TX_DMA               1
 #define RTE_USART3_TX_DMA_NUMBER        1
 #define RTE_USART3_TX_DMA_STREAM        3
 #define RTE_USART3_TX_DMA_CHANNEL       4
@@ -415,10 +414,10 @@
 
 // <e> UART4 (Universal asynchronous receiver transmitter) [Driver_USART4]
 // <i> Configuration settings for Driver_USART4 in component ::CMSIS Driver:USART
-#define RTE_UART4                       0
+#define RTE_UART4                       1
 
 //   <o> UART4_TX Pin <0=>Not Used <1=>PA0 <2=>PC10 <3=>PD10 <4=>PA12 <5=>PD1
-#define RTE_UART4_TX_ID                 0
+#define RTE_UART4_TX_ID                 1
 #if    (RTE_UART4_TX_ID == 0)
 #define RTE_UART4_TX                    0
 #elif  (RTE_UART4_TX_ID == 1)
@@ -495,7 +494,7 @@
 //     <o4> Priority <0=>Low <1=>Medium <2=>High <3=>Very High
 //     <i>  Selects DMA Priority
 //   </e>
-#define RTE_UART4_TX_DMA                0
+#define RTE_UART4_TX_DMA                1
 #define RTE_UART4_TX_DMA_NUMBER         1
 #define RTE_UART4_TX_DMA_STREAM         4
 #define RTE_UART4_TX_DMA_CHANNEL        4
@@ -506,10 +505,10 @@
 
 // <e> UART5 (Universal asynchronous receiver transmitter) [Driver_USART5]
 // <i> Configuration settings for Driver_USART5 in component ::CMSIS Driver:USART
-#define RTE_UART5                       0
+#define RTE_UART5                       1
 
 //   <o> UART5_TX Pin <0=>Not Used <1=>PC12 <2=>PB6 <3=>PB9 <4=>PB13
-#define RTE_UART5_TX_ID                 0
+#define RTE_UART5_TX_ID                 1
 #if    (RTE_UART5_TX_ID == 0)
 #define RTE_UART5_TX                    0
 #elif  (RTE_UART5_TX_ID == 1)
@@ -582,7 +581,7 @@
 //     <o4> Priority <0=>Low <1=>Medium <2=>High <3=>Very High
 //     <i>  Selects DMA Priority
 //   </e>
-#define RTE_UART5_TX_DMA                0
+#define RTE_UART5_TX_DMA                1
 #define RTE_UART5_TX_DMA_NUMBER         1
 #define RTE_UART5_TX_DMA_STREAM         7
 #define RTE_UART5_TX_DMA_CHANNEL        4
@@ -593,10 +592,10 @@
 
 // <e> USART6 (Universal synchronous asynchronous receiver transmitter) [Driver_USART6]
 // <i> Configuration settings for Driver_USART6 in component ::CMSIS Driver:USART
-#define RTE_USART6                      0
+#define RTE_USART6                      1
 
 //   <o> USART6_TX Pin <0=>Not Used <1=>PA11 <2=>PC6 <3=>PG14
-#define RTE_USART6_TX_ID                0
+#define RTE_USART6_TX_ID                2
 #if    (RTE_USART6_TX_ID == 0)
 #define RTE_USART6_TX                   0
 #elif  (RTE_USART6_TX_ID == 1)
@@ -709,7 +708,7 @@
 //     <o4> Priority <0=>Low <1=>Medium <2=>High <3=>Very High
 //     <i>  Selects DMA Priority
 //   </e>
-#define RTE_USART6_TX_DMA               0
+#define RTE_USART6_TX_DMA               1
 #define RTE_USART6_TX_DMA_NUMBER        2
 #define RTE_USART6_TX_DMA_STREAM        6
 #define RTE_USART6_TX_DMA_CHANNEL       5
@@ -719,10 +718,10 @@
 
 // <e> UART7 (Universal asynchronous receiver transmitter) [Driver_USART7]
 // <i> Configuration settings for Driver_USART7 in component ::CMSIS Driver:USART
-#define RTE_UART7                       0
+#define RTE_UART7                       1
 
 //   <o> UART7_TX Pin <0=>Not Used <1=>PF7 <2=>PE8 <3=>PA15 <4=>PB4
-#define RTE_UART7_TX_ID                 0
+#define RTE_UART7_TX_ID                 2
 #if    (RTE_UART7_TX_ID == 0)
 #define RTE_UART7_TX                    0
 #elif  (RTE_UART7_TX_ID == 1)
@@ -795,7 +794,7 @@
 //     <o4> Priority <0=>Low <1=>Medium <2=>High <3=>Very High
 //     <i>  Selects DMA Priority
 //   </e>
-#define RTE_UART7_TX_DMA                0
+#define RTE_UART7_TX_DMA                1
 #define RTE_UART7_TX_DMA_NUMBER         1
 #define RTE_UART7_TX_DMA_STREAM         1
 #define RTE_UART7_TX_DMA_CHANNEL        5
@@ -805,10 +804,10 @@
 
 // <e> UART8 (Universal asynchronous receiver transmitter) [Driver_USART8]
 // <i> Configuration settings for Driver_USART8 in component ::CMSIS Driver:USART
-#define RTE_UART8                       0
+#define RTE_UART8                       1
 
 //   <o> UART8_TX Pin <0=>Not Used <1=>PE1 <2=>PF9
-#define RTE_UART8_TX_ID                 0
+#define RTE_UART8_TX_ID                 1
 #if    (RTE_UART8_TX_ID == 0)
 #define RTE_UART8_TX                    0
 #elif  (RTE_UART8_TX_ID == 1)
@@ -865,7 +864,7 @@
 //     <o4> Priority <0=>Low <1=>Medium <2=>High <3=>Very High
 //     <i>  Selects DMA Priority
 //   </e>
-#define RTE_UART8_TX_DMA                0
+#define RTE_UART8_TX_DMA                1
 #define RTE_UART8_TX_DMA_NUMBER         1
 #define RTE_UART8_TX_DMA_STREAM         0
 #define RTE_UART8_TX_DMA_CHANNEL        5
@@ -875,10 +874,10 @@
 
 // <e> UART9 (Universal asynchronous receiver transmitter) [Driver_USART9]
 // <i> Configuration settings for Driver_USART9 in component ::CMSIS Driver:USART
-#define RTE_UART9                       0
+#define RTE_UART9                       1
 
 //   <o> UART9_TX Pin <0=>Not Used <1=>PD15 <2=>PG1
-#define RTE_UART9_TX_ID                 0
+#define RTE_UART9_TX_ID                 1
 #if    (RTE_UART9_TX_ID == 0)
 #define RTE_UART9_TX                    0
 #elif  (RTE_UART9_TX_ID == 1)
@@ -935,7 +934,7 @@
 //     <o4> Priority <0=>Low <1=>Medium <2=>High <3=>Very High
 //     <i>  Selects DMA Priority
 //   </e>
-#define RTE_UART9_TX_DMA                0
+#define RTE_UART9_TX_DMA                1
 #define RTE_UART9_TX_DMA_NUMBER         1
 #define RTE_UART9_TX_DMA_STREAM         0
 #define RTE_UART9_TX_DMA_CHANNEL        5
@@ -945,10 +944,10 @@
 
 // <e> UART10 (Universal asynchronous receiver transmitter) [Driver_USART10]
 // <i> Configuration settings for Driver_USART10 in component ::CMSIS Driver:USART
-#define RTE_UART10                      0
+#define RTE_UART10                      1
 
 //   <o> UART10_TX Pin <0=>Not Used <1=>PE3 <2=>PG12
-#define RTE_UART10_TX_ID                0
+#define RTE_UART10_TX_ID                1
 #if    (RTE_UART10_TX_ID == 0)
 #define RTE_UART10_TX                   0
 #elif  (RTE_UART10_TX_ID == 1)
@@ -1005,7 +1004,7 @@
 //     <o4> Priority <0=>Low <1=>Medium <2=>High <3=>Very High
 //     <i>  Selects DMA Priority
 //   </e>
-#define RTE_UART10_TX_DMA               0
+#define RTE_UART10_TX_DMA               1
 #define RTE_UART10_TX_DMA_NUMBER        1
 #define RTE_UART10_TX_DMA_STREAM        0
 #define RTE_UART10_TX_DMA_CHANNEL       5
@@ -1016,10 +1015,10 @@
 
 // <e> I2C1 (Inter-integrated Circuit Interface 1) [Driver_I2C1]
 // <i> Configuration settings for Driver_I2C1 in component ::CMSIS Driver:I2C
-#define RTE_I2C1                        0
+#define RTE_I2C1                        1
 
 //   <o> I2C1_SCL Pin <0=>PB6 <1=>PB8
-#define RTE_I2C1_SCL_PORT_ID            0
+#define RTE_I2C1_SCL_PORT_ID            1
 #if    (RTE_I2C1_SCL_PORT_ID == 0)
 #define RTE_I2C1_SCL_PORT               GPIOB
 #define RTE_I2C1_SCL_BIT                6
@@ -1031,7 +1030,7 @@
 #endif
 
 //   <o> I2C1_SDA Pin <0=>PB7 <1=>PB9
-#define RTE_I2C1_SDA_PORT_ID            0
+#define RTE_I2C1_SDA_PORT_ID            1
 #if    (RTE_I2C1_SDA_PORT_ID == 0)
 #define RTE_I2C1_SDA_PORT               GPIOB
 #define RTE_I2C1_SDA_BIT                7
@@ -1052,7 +1051,7 @@
 //     <o4> Priority <0=>Low <1=>Medium <2=>High <3=>Very High
 //     <i>  Selects DMA Priority
 //   </e>
-#define RTE_I2C1_RX_DMA                 0
+#define RTE_I2C1_RX_DMA                 1
 #define RTE_I2C1_RX_DMA_NUMBER          1
 #define RTE_I2C1_RX_DMA_STREAM          0
 #define RTE_I2C1_RX_DMA_CHANNEL         1
@@ -1068,7 +1067,7 @@
 //     <o4> Priority <0=>Low <1=>Medium <2=>High <3=>Very High
 //     <i>  Selects DMA Priority
 //   </e>
-#define RTE_I2C1_TX_DMA                 0
+#define RTE_I2C1_TX_DMA                 1
 #define RTE_I2C1_TX_DMA_NUMBER          1
 #define RTE_I2C1_TX_DMA_STREAM          6
 #define RTE_I2C1_TX_DMA_CHANNEL         1
@@ -1223,10 +1222,10 @@
 
 // <e> SPI1 (Serial Peripheral Interface 1) [Driver_SPI1]
 // <i> Configuration settings for Driver_SPI1 in component ::CMSIS Driver:SPI
-#define RTE_SPI1                        0
+#define RTE_SPI1                        1
 
 //   <o> SPI1_MISO Pin <0=>Not Used <1=>PA6 <2=>PB4
-#define RTE_SPI1_MISO_PORT_ID           0
+#define RTE_SPI1_MISO_PORT_ID           1
 #if    (RTE_SPI1_MISO_PORT_ID == 0)
 #define RTE_SPI1_MISO                   0
 #elif  (RTE_SPI1_MISO_PORT_ID == 1)
@@ -1242,7 +1241,7 @@
 #endif
 
 //   <o> SPI1_MOSI Pin <0=>Not Used <1=>PA7 <2=>PB5
-#define RTE_SPI1_MOSI_PORT_ID           0
+#define RTE_SPI1_MOSI_PORT_ID           1
 #if    (RTE_SPI1_MOSI_PORT_ID == 0)
 #define RTE_SPI1_MOSI                   0
 #elif  (RTE_SPI1_MOSI_PORT_ID == 1)
@@ -1270,7 +1269,7 @@
 #endif
 
 //   <o> SPI1_NSS Pin <0=>Not Used <1=>PA4 <2=>PA15
-#define RTE_SPI1_NSS_PORT_ID            0
+#define RTE_SPI1_NSS_PORT_ID            1
 #if    (RTE_SPI1_NSS_PORT_ID == 0)
 #define RTE_SPI1_NSS_PIN                0
 #elif  (RTE_SPI1_NSS_PORT_ID == 1)
@@ -1295,7 +1294,7 @@
 //     <o4> Priority <0=>Low <1=>Medium <2=>High <3=>Very High
 //     <i>  Selects DMA Priority
 //   </e>
-#define RTE_SPI1_RX_DMA                 0
+#define RTE_SPI1_RX_DMA                 1
 #define RTE_SPI1_RX_DMA_NUMBER          2
 #define RTE_SPI1_RX_DMA_STREAM          0
 #define RTE_SPI1_RX_DMA_CHANNEL         3
@@ -1311,7 +1310,7 @@
 //     <o4> Priority <0=>Low <1=>Medium <2=>High <3=>Very High
 //     <i>  Selects DMA Priority
 //   </e>
-#define RTE_SPI1_TX_DMA                 0
+#define RTE_SPI1_TX_DMA                 1
 #define RTE_SPI1_TX_DMA_NUMBER          2
 #define RTE_SPI1_TX_DMA_STREAM          5
 #define RTE_SPI1_TX_DMA_CHANNEL         3
@@ -2096,10 +2095,10 @@
 
 // <e> CAN1 (Controller Area Network 1) [Driver_CAN1]
 // <i> Configuration settings for Driver_CAN1 in component ::CMSIS Driver:CAN
-#define RTE_CAN1                        1
+#define RTE_CAN1                        0
 
 //   <o> CAN1_RX Pin <0=>PA11 <1=>PB8 <2=>PD0 <3=>PI9 <4=>PG0
-#define RTE_CAN1_RX_PORT_ID             2
+#define RTE_CAN1_RX_PORT_ID             1
 #if    (RTE_CAN1_RX_PORT_ID == 0)
 #define RTE_CAN1_RX_PORT                GPIOA
 #define RTE_CAN1_RX_BIT                 GPIO_PIN_11
@@ -2120,7 +2119,7 @@
 #endif
 
 //   <o> CAN1_TX Pin <0=>PA12 <1=>PB9 <2=>PD1 <3=>PH13 <4=>PG1
-#define RTE_CAN1_TX_PORT_ID             2
+#define RTE_CAN1_TX_PORT_ID             1
 #if    (RTE_CAN1_TX_PORT_ID == 0)
 #define RTE_CAN1_TX_PORT                GPIOA
 #define RTE_CAN1_TX_BIT                 GPIO_PIN_12
@@ -2140,40 +2139,15 @@
 #error "Invalid CAN1_TX Pin Configuration!"
 #endif
 
-//   <e> Standby
-//   <i> Use standby signal in external driver
-#define RTE_CAN1_STB 1
-
-//     <o> Standby port <0=>PORTA <1=>PORTB <2=>PORTC <3=>PORTD <4=>PORTE <5=>PORTF <6=>PORTG <7=>PORTH <8=>PORTI <9=>PORTJ <10=>PORTK
-#define RTE_CAN1_STB_PORT GPIO_PORT(3)
-//     <o> Standby pin <0=>0 <1=>1 <2=>2 <3=>3 <4=>4 <5=>5 <6=>6 <7=>7 <8=>8 <9=>9 <10=>10 <11=>11 <12=>12 <13=>13 <14=>14 <15=>15
-#define RTE_CAN1_STB_PIN GPIO_PIN(4)
-//     <o> Standby active value <0=>RESET <1=>SET
-//     <i> This value standby mode activation
-#define RTE_CAN1_STB_ACTIVE 1
-//   </e>
-
-//   <e> Terminator
-//   <i> Use terminator on/of in external driver
-#define RTE_CAN1_TERM 0
-
-//     <o> Terminator port <0=>PORTA <1=>PORTB <2=>PORTC <3=>PORTD <4=>PORTE <5=>PORTF <6=>PORTG <7=>PORTH <8=>PORTI <9=>PORTJ <10=>PORTK
-#define RTE_CAN1_TERM_PORT GPIO_PORT(0)
-//     <o> Terminator pin <0=>0 <1=>1 <2=>2 <3=>3 <4=>4 <5=>5 <6=>6 <7=>7 <8=>8 <9=>9 <10=>10 <11=>11 <12=>12 <13=>13 <14=>14 <15=>15
-#define RTE_CAN1_TERM_PIN GPIO_PIN(0)
-//     <o> Terminator active value <0=>RESET <1=>SET
-//     <i> This value connect terminator to output
-#define RTE_CAN1_TERM_ACTIVE 1
-//   </e>
 // </e>
 
 
 // <e> CAN2 (Controller Area Network 2) [Driver_CAN2]
 // <i> Configuration settings for Driver_CAN2 in component ::CMSIS Driver:CAN
-#define RTE_CAN2                        1
+#define RTE_CAN2                        0
 
 //   <o> CAN2_RX Pin <0=>PB5 <1=>PB12 <2=>PG11
-#define RTE_CAN2_RX_PORT_ID             0
+#define RTE_CAN2_RX_PORT_ID             1
 #if    (RTE_CAN2_RX_PORT_ID == 0)
 #define RTE_CAN2_RX_PORT                GPIOB
 #define RTE_CAN2_RX_BIT                 GPIO_PIN_5
@@ -2188,7 +2162,7 @@
 #endif
 
 //   <o> CAN2_TX Pin <0=>PB6 <1=>PB13 <2=>PG12
-#define RTE_CAN2_TX_PORT_ID             1
+#define RTE_CAN2_TX_PORT_ID             0
 #if    (RTE_CAN2_TX_PORT_ID == 0)
 #define RTE_CAN2_TX_PORT                GPIOB
 #define RTE_CAN2_TX_BIT                 GPIO_PIN_6
@@ -2202,42 +2176,16 @@
 #error "Invalid CAN2_TX Pin Configuration!"
 #endif
 
-//   <e> Standby
-//   <i> Use standby signal in external driver
-#define RTE_CAN2_STB 1
-
-//     <o> Standby port <0=>PORTA <1=>PORTB <2=>PORTC <3=>PORTD <4=>PORTE <5=>PORTF <6=>PORTG <7=>PORTH <8=>PORTI <9=>PORTJ <10=>PORTK
-#define RTE_CAN2_STB_PORT GPIO_PORT(1)
-//     <o> Standby pin <0=>0 <1=>1 <2=>2 <3=>3 <4=>4 <5=>5 <6=>6 <7=>7 <8=>8 <9=>9 <10=>10 <11=>11 <12=>12 <13=>13 <14=>14 <15=>15
-#define RTE_CAN2_STB_PIN GPIO_PIN(6)
-//     <o> Standby active value <0=>RESET <1=>SET
-//     <i> This value standby mode activation
-#define RTE_CAN2_STB_ACTIVE 1
-//   </e>
-
-
-//   <e> Terminator
-//   <i> Use terminator on/of in external driver
-#define RTE_CAN2_TERM 0
-
-//     <o> Terminator port <0=>PORTA <1=>PORTB <2=>PORTC <3=>PORTD <4=>PORTE <5=>PORTF <6=>PORTG <7=>PORTH <8=>PORTI <9=>PORTJ <10=>PORTK
-#define RTE_CAN2_TERM_PORT GPIO_PORT(0)
-//     <o> Terminator pin <0=>0 <1=>1 <2=>2 <3=>3 <4=>4 <5=>5 <6=>6 <7=>7 <8=>8 <9=>9 <10=>10 <11=>11 <12=>12 <13=>13 <14=>14 <15=>15
-#define RTE_CAN2_TERM_PIN GPIO_PIN(0)
-//     <o> Terminator active value <0=>RESET <1=>SET
-//     <i> This value connect terminator to output
-#define RTE_CAN2_TERM_ACTIVE 1
-//   </e>
 // </e>
 
 
 // <e> CAN3 (Controller Area Network 3) [Driver_CAN3]
 // <i> Configuration settings for Driver_CAN3 in component ::CMSIS Driver:CAN
 // <i> Available only on STM32F413xx and STM32F423xx device series
-#define RTE_CAN3                        1
+#define RTE_CAN3                        0
 
 //   <o> CAN3_RX Pin <0=>PA8 <1=>PB3
-#define RTE_CAN3_RX_PORT_ID             0
+#define RTE_CAN3_RX_PORT_ID             1
 #if    (RTE_CAN3_RX_PORT_ID == 0)
 #define RTE_CAN3_RX_PORT                GPIOA
 #define RTE_CAN3_RX_BIT                 GPIO_PIN_8
@@ -2260,31 +2208,6 @@
 #error "Invalid CAN3_TX Pin Configuration!"
 #endif
 
-//   <e> Standby
-//   <i> Use standby signal in external driver
-#define RTE_CAN3_STB 1
-
-//     <o> Standby port <0=>PORTA <1=>PORTB <2=>PORTC <3=>PORTD <4=>PORTE <5=>PORTF <6=>PORTG <7=>PORTH <8=>PORTI <9=>PORTJ <10=>PORTK
-#define RTE_CAN3_STB_PORT GPIO_PORT(4)
-//     <o> Standby pin <0=>0 <1=>1 <2=>2 <3=>3 <4=>4 <5=>5 <6=>6 <7=>7 <8=>8 <9=>9 <10=>10 <11=>11 <12=>12 <13=>13 <14=>14 <15=>15
-#define RTE_CAN3_STB_PIN GPIO_PIN(11)
-//     <o> Standby active value <0=>RESET <1=>SET
-//     <i> This value standby mode activation
-#define RTE_CAN3_STB_ACTIVE 1
-//   </e>
-
-//   <e> Terminator
-//   <i> Use terminator on/of in external driver
-#define RTE_CAN3_TERM 0
-
-//     <o> Terminator port <0=>PORTA <1=>PORTB <2=>PORTC <3=>PORTD <4=>PORTE <5=>PORTF <6=>PORTG <7=>PORTH <8=>PORTI <9=>PORTJ <10=>PORTK
-#define RTE_CAN3_TERM_PORT GPIO_PORT(0)
-//     <o> Terminator pin <0=>0 <1=>1 <2=>2 <3=>3 <4=>4 <5=>5 <6=>6 <7=>7 <8=>8 <9=>9 <10=>10 <11=>11 <12=>12 <13=>13 <14=>14 <15=>15
-#define RTE_CAN3_TERM_PIN GPIO_PIN(0)
-//     <o> Terminator active value <0=>RESET <1=>SET
-//     <i> This value connect terminator to output
-#define RTE_CAN3_TERM_ACTIVE 1
-//   </e>
 // </e>
 
 

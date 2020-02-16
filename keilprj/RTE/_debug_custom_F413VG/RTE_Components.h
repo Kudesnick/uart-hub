@@ -44,8 +44,6 @@
 #define RTE_Drivers_USBD0               /* Driver USBD0 */
 /*  Keil::Device:STM32Cube Framework:Classic:1.7.6 */
 #define RTE_DEVICE_FRAMEWORK_CLASSIC
-/*  Keil::Device:STM32Cube HAL:CAN:1.7.6 */
-#define RTE_DEVICE_HAL_CAN
 /*  Keil::Device:STM32Cube HAL:CRC:1.7.6 */
 #define RTE_DEVICE_HAL_CRC
 /*  Keil::Device:STM32Cube HAL:Common:1.7.6 */
