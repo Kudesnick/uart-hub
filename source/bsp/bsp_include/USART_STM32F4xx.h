@@ -121,8 +121,8 @@
       #if ((RTE_USART1_TX_ID != 2) && (RTE_USART1_TX_ID != 3))
         #error "Only PA15 and PB6 can be configured as USART TX on selected device!"
       #endif
-    #elif !defined (STM32F411xE)
-      // PA15 as USART1 TX only available on STM32F411xx
+    #elif !defined (STM32F411xE) && !defined (STM32F413xx)
+      // PA15 as USART1 TX only available on STM32F411xx or STM32F413xx
       #if (RTE_USART1_TX_ID == 2)
         #error "PA15 can not be configured as USART1 TX on selected device!"
       #endif

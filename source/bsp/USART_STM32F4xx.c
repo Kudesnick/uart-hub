@@ -1544,7 +1544,7 @@ static USART_TRANSFER_INFO UART9_TransferInfo;
     MX_UART9_TX_DMA_Instance,
     MX_UART9_TX_DMA_Channel,
     MX_UART9_TX_DMA_Priority,
-    MX_UART9_TX_DMA_IRQn
+    MX_UART9_TX_DMA_IRQn,
     { 0U, 0U, 0U }
 #endif
   };
@@ -4042,7 +4042,7 @@ static int32_t                 USART9_SetModemControl (ARM_USART_MODEM_CONTROL c
 static ARM_USART_MODEM_STATUS  USART9_GetModemStatus  (void)                                                { return USART_GetModemStatus (&USART9_Resources); }
        void                    UART9_IRQHandler       (void)                                                {        USART_IRQHandler (&USART9_Resources); }
 #ifdef MX_UART9_TX_DMA_Instance
-static void                    UART8_TX_DMA_Complete (DMA_HandleTypeDef *hdma)                              {        USART_TX_DMA_Complete(&USART9_Resources); }
+static void                    UART9_TX_DMA_Complete (DMA_HandleTypeDef *hdma)                              {        USART_TX_DMA_Complete(&USART9_Resources); }
 
 #ifdef RTE_DEVICE_FRAMEWORK_CLASSIC
 void UART9_TX_DMA_Handler (void) {
@@ -4098,7 +4098,7 @@ static int32_t                 USART10_SetModemControl (ARM_USART_MODEM_CONTROL 
 static ARM_USART_MODEM_STATUS  USART10_GetModemStatus  (void)                                                { return USART_GetModemStatus (&USART10_Resources); }
        void                    UART10_IRQHandler       (void)                                                {        USART_IRQHandler (&USART10_Resources); }
 #ifdef MX_UART8_TX_DMA_Instance
-static void                    UART8_TX_DMA_Complete (DMA_HandleTypeDef *hdma)                               {        USART_TX_DMA_Complete(&USART10_Resources); }
+static void                    UART10_TX_DMA_Complete (DMA_HandleTypeDef *hdma)                               {        USART_TX_DMA_Complete(&USART10_Resources); }
 
 #ifdef RTE_DEVICE_FRAMEWORK_CLASSIC
 void UART10_TX_DMA_Handler (void) {
