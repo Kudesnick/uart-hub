@@ -1,8 +1,8 @@
 /***************************************************************************************************
- *   Project:       
+ *   Project:
  *   Author:        Stulov Tikhon (kudesnick@inbox.ru)
  ***************************************************************************************************
- *   Distribution:  
+ *   Distribution:
  *
  ***************************************************************************************************
  *   MCU Family:    STM32F
@@ -11,7 +11,7 @@
  *   File:          cpp_os.h
  *   Description:   Object wrapper for RTX-5 primitives.
  *                  Classes provide static memory allocation for stacks, queues and so on.
- *                  Сlasses provide an interface for using OS functions within the C ++ paradigm. 
+ *                  Сlasses provide an interface for using OS functions within the C ++ paradigm.
  *
  ***************************************************************************************************
  *   History:       27.05.2019 - file created
@@ -63,8 +63,8 @@
  *                                EXTERNAL FUNCTION PROTOTYPES
  **************************************************************************************************/
 
-void thread_run(void * argument);
-void timer_run(void * argument);
+void thread_run(void *argument);
+void timer_run(void *argument);
 
 /***************************************************************************************************
  *                               PUBLIC CLASS
@@ -79,21 +79,21 @@ private:
     // Произвести инициализацию всех примитивов ОС
     static void all_elements_create(void);
     // Инициализация примитива ОС
-    virtual void * create(void) = 0;
+    virtual void *create(void) = 0;
 
 protected:
     // Проверить возвращаемое значение (используется для отладки)
     static osStatus_t os_chck(osStatus_t);
-    static void * os_chck(void *);
-    const char * name;
+    static void *os_chck(void *);
+    const char *name;
 
 public:
     cpp_os(void):
         cpp_list(),
         name(NULL)
     {};
-    
-    cpp_os(const char * _name):
+
+    cpp_os(const char *_name):
         cpp_list(),
         name(_name)
     {};
@@ -107,7 +107,7 @@ public:
     {
         return osDelay(_ticks);
     };
-    
+
     static osStatus_t delay_until(const uint32_t _ticks)
     {
         return osDelayUntil(_ticks);
@@ -117,22 +117,22 @@ public:
     {
         return osKernelGetTickCount();
     };
-    
+
     static uint32_t get_tick_freq(void)
     {
         return osKernelGetTickFreq();
     }
-    
+
     static constexpr  int32_t ok              = osOK;
     static constexpr  int32_t error           = osError;
     static constexpr  int32_t error_timeout   = osErrorTimeout;
     static constexpr  int32_t error_resource  = osErrorResource;
     static constexpr  int32_t error_parameter = osErrorParameter;
     static constexpr  int32_t error_nomemory  = osErrorNoMemory;
-    static constexpr  int32_t error_isr       = osErrorISR;    
+    static constexpr  int32_t error_isr       = osErrorISR;
 
-    static constexpr osPriority_t priority_none           = osPriorityNone        ; ///< No priority (not initialized).
-    static constexpr osPriority_t priority_idle           = osPriorityIdle        ; ///< Reserved for Idle thread.
+    static constexpr osPriority_t priority_none           = osPriorityNone        ;
+    static constexpr osPriority_t priority_idle           = osPriorityIdle        ;
     static constexpr osPriority_t priority_low            = osPriorityLow         ;
     static constexpr osPriority_t priority_low_1          = osPriorityLow1        ;
     static constexpr osPriority_t priority_low_2          = osPriorityLow2        ;
@@ -181,9 +181,9 @@ public:
     static constexpr osPriority_t priority_realtime_5     = osPriorityRealtime5   ;
     static constexpr osPriority_t priority_realtime_6     = osPriorityRealtime6   ;
     static constexpr osPriority_t priority_realtime_7     = osPriorityRealtime7   ;
-    static constexpr osPriority_t priority_isr            = osPriorityISR         ; ///< Reserved for ISR deferred thread.
-    static constexpr osPriority_t priority_error          = osPriorityError       ; ///< System cannot determine priority or illegal priority.
-    static constexpr osPriority_t priority_reserved       = osPriorityReserved    ; ///< Prevents enum down-size compiler optimization.
+    static constexpr osPriority_t priority_isr            = osPriorityISR         ;
+    static constexpr osPriority_t priority_error          = osPriorityError       ;
+    static constexpr osPriority_t priority_reserved       = osPriorityReserved    ;
 
     static constexpr osThreadState_t thread_inactive   = osThreadInactive  ;
     static constexpr osThreadState_t thread_ready      = osThreadReady     ;
@@ -192,9 +192,9 @@ public:
     static constexpr osThreadState_t thread_terminated = osThreadTerminated;
     static constexpr osThreadState_t thread_error      = osThreadError     ;
     static constexpr osThreadState_t thread_reserved   = osThreadReserved  ;
-    
+
     static constexpr uint32_t wait_forever   = osWaitForever;
-    
+
     static constexpr uint32_t flags_wait_any        = osFlagsWaitAny;
     static constexpr uint32_t flags_wait_all        = osFlagsWaitAll;
     static constexpr uint32_t flags_no_clear        = osFlagsNoClear;
@@ -210,7 +210,7 @@ public:
     static constexpr uint32_t mutex_recursive    = osMutexRecursive;
     static constexpr uint32_t mutex_prio_inherit = osMutexPrioInherit;
     static constexpr uint32_t mutex_robust       = osMutexRobust;
-    };
+};
 
 //-- thread
 
@@ -222,18 +222,18 @@ template<uint32_t T_stack_size = OS_STACK_SIZE> class cpp_os_thread : public cpp
 {
 private:
     // Выравнивание по uint64_t обязательно
-    uint64_t stack[ALIGNED_LEN(T_stack_size, uint64_t)]; 
+    uint64_t stack[ALIGNED_LEN(T_stack_size, uint64_t)];
 #ifdef STATIC_CBM
     osRtxThread_t tcb;
 #endif
     bool must_run;
     const osPriority_t priority;
 
-    friend void thread_run(void * argument);
-    
+    friend void thread_run(void *argument);
+
     // Виртуальная функция тела потока. Должна быть реализована в дочернем классе.
     virtual void thread_func(void) = 0;
-    
+
     // Инициализация и запуск потока
     osThreadId_t create(void)
     {
@@ -241,33 +241,33 @@ private:
         {
             id_ = run();
         }
-        
+
         return id_;
     };
-    
+
 protected:
     osThreadId_t id_;
-    
+
     osStatus_t yeld(void)
-    {        
+    {
         return osThreadYield();
     };
-    
+
     void exit(void)
     {
         osThreadExit();
     };
-    
+
     uint32_t flags_clear(uint32_t _flags)
     {
-        return osThreadFlagsClear(_flags);	
+        return osThreadFlagsClear(_flags);
     };
-    
+
     uint32_t flags_get(void)
     {
-        return osThreadFlagsGet();	
+        return osThreadFlagsGet();
     };
-    
+
     uint32_t flags_wait(uint32_t _flags, uint32_t _options, uint32_t _timeout)
     {
         return osThreadFlagsWait(_flags, _options, _timeout);
@@ -277,17 +277,17 @@ public:
     // если true - инициализация и запуск потока выполняется на этапе инициализации ОС
     cpp_os_thread(const bool _auto_run,
                   const osPriority_t _priority,
-                  const char * _name):
+                  const char *_name):
         cpp_os(_name),
         must_run(_auto_run),
         priority(_priority)
     {};
-    
-    cpp_os_thread(const bool _auto_run, const char * _name):
+
+    cpp_os_thread(const bool _auto_run, const char *_name):
         cpp_os_thread(_auto_run, priority_normal, _name)
     {};
-    
-    cpp_os_thread(const char * _name):
+
+    cpp_os_thread(const char *_name):
         cpp_os_thread(true, priority_normal, _name)
     {};
 
@@ -296,10 +296,10 @@ public:
         const osThreadAttr_t attr =
         {
             .name       = name,
-        #ifdef STATIC_CBM
+#ifdef STATIC_CBM
             .cb_mem     = &tcb,
             .cb_size    = sizeof(tcb),
-        #endif
+#endif
             .stack_mem  = stack,
             .stack_size = sizeof(stack),
             .priority   = priority,
@@ -317,55 +317,55 @@ public:
         {
             id_ = os_chck(osThreadNew(thread_run, this, &attr));
         }
-        
+
         return id_;
     };
-    
-    const char * get_name(void)
+
+    const char *get_name(void)
     {
         return osThreadGetName(id_);
     };
-    
+
     osThreadState_t get_state(void)
     {
         return osThreadGetState(id_);
     };
-    
+
     osStatus_t set_priority(osPriority_t _priority)
     {
         return osThreadSetPriority(id_, _priority);
     };
-    
+
     osPriority_t get_priority(void)
-    {        
+    {
         return osThreadGetPriority(id_);
     };
 
     osStatus_t suspend(void)
-    {        
+    {
         return osThreadSuspend(id_);
     };
-    
+
     osStatus_t resume(void)
-    {        
+    {
         return osThreadResume(id_);
     };
-    
+
     osStatus_t detach(void)
-    {        
+    {
         return osThreadDetach(id_);
     };
-    
+
     osStatus_t join(void)
-    {        
+    {
         return osThreadJoin(id_);
     };
-    
+
     osStatus_t terminate(void)
-    {        
+    {
         return osThreadTerminate(id_);
     };
-    
+
     uint32_t get_stack_size(void)
     {
         return osThreadGetStackSize(id_);
@@ -376,13 +376,13 @@ public:
         // Stack watermark recording during execution needs to be enabled.
         return osThreadGetStackSize(id_);
     };
-    
-    static uint32_t get_count(void)	
+
+    static uint32_t get_count(void)
     {
         return osThreadGetCount();
     };
-    
-    static uint32_t enumerate(osThreadId_t *& _thread_array, uint32_t _array_items)
+
+    static uint32_t enumerate(osThreadId_t *&_thread_array, uint32_t _array_items)
     {
         return osThreadEnumerate(_thread_array, _array_items);
     };
@@ -406,8 +406,8 @@ private:
     const bool repeat;
     const uint32_t interval;
 
-    friend void timer_run(void * argument);
-    
+    friend void timer_run(void *argument);
+
     // Виртуальная функция тела таймера. Должна быть реализована в дочернем классе.
     virtual void timer_func(void) = 0;
 
@@ -422,11 +422,11 @@ private:
             .cb_size = sizeof(tcb),
 #endif
         };
-        
+
         const osTimerType_t type = (repeat) ? osTimerPeriodic : osTimerOnce;
-        
+
         id_ = osTimerNew(timer_run, type, this, &attr);
-        
+
         return id_;
     };
 
@@ -435,32 +435,32 @@ protected:
 
 public:
     // Constructor
-    cpp_os_timer(const uint32_t _interval, const bool _repeat, const char * _name):
+    cpp_os_timer(const uint32_t _interval, const bool _repeat, const char *_name):
         cpp_os(_name),
         interval(_interval),
         repeat(_repeat)
     {};
-    
-    const char * get_name(void)
+
+    const char *get_name(void)
     {
         return osTimerGetName(id_);
     };
-    
+
     osStatus_t start(void)
     {
-        return osTimerStart(id_, interval);	
+        return osTimerStart(id_, interval);
     };
-    
+
     osStatus_t start(const uint32_t _interval)
     {
-        return osTimerStart(id_, _interval);	
+        return osTimerStart(id_, _interval);
     };
-    
+
     osStatus_t stop(void)
     {
         return osTimerStop(id_);
     };
-    
+
     bool is_runing(void)
     {
         return static_cast<bool>(osTimerIsRunning(id_));
@@ -477,7 +477,8 @@ public:
 template<typename T_queue_elment_t, uint32_t T_queue_count> class cpp_os_queue : public cpp_os
 {
 private:
-    uint32_t qdata[osRtxMessageQueueMemSize(T_queue_count, sizeof(T_queue_elment_t)) / sizeof(uint32_t)];
+    uint32_t qdata[osRtxMessageQueueMemSize(T_queue_count,
+                                            sizeof(T_queue_elment_t)) / sizeof(uint32_t)];
 
 #ifdef STATIC_CBM
     osRtxMessageQueue_t qcb;
@@ -508,31 +509,31 @@ protected:
     osMessageQueueId_t id_;
 
 public:
-    cpp_os_queue(const char * _name = NULL):
+    cpp_os_queue(const char *_name = NULL):
         cpp_os(_name)
     {};
 
-    osStatus_t put(const void * _msg_ptr, uint8_t _msg_prio, uint32_t _timeout)
+    osStatus_t put(const void *_msg_ptr, uint8_t _msg_prio, uint32_t _timeout)
     {
         if (_msg_ptr == NULL)
         {
             _msg_ptr = &msg_;
         }
-    
+
         return osMessageQueuePut(id_, _msg_ptr, _msg_prio, _timeout);
     };
-    
+
     osStatus_t put_now(void)
     {
         return put(NULL, 0, 0);
     }
-    
+
     osStatus_t put_wait_forever(void)
     {
         return put(NULL, 0, cpp_os::wait_forever);
     }
 
-    osStatus_t get(void * _msg_ptr, uint8_t * _msg_prio, uint32_t _timeout)
+    osStatus_t get(void *_msg_ptr, uint8_t *_msg_prio, uint32_t _timeout)
     {
         if (_msg_ptr == NULL)
         {
@@ -542,15 +543,15 @@ public:
         {
             _msg_prio = &msg_priority_;
         }
-    
+
         return osMessageQueueGet(id_, _msg_ptr, _msg_prio, _timeout);
     };
-    
+
     osStatus_t get_now(void)
     {
         return get(NULL, NULL, 0);
     }
-    
+
     osStatus_t get_wait_forever(void)
     {
         return get(NULL, NULL, cpp_os::wait_forever);
@@ -569,18 +570,18 @@ public:
     uint32_t get_count(void)
     {
         return osMessageQueueGetCount(id_);
-    };  
+    };
 
     uint32_t get_space(void)
     {
         return osMessageQueueGetSpace(id_);
     };
 
-    osStatus_t reset(void)   
+    osStatus_t reset(void)
     {
         return osMessageQueueReset(id_);
     };
-    
+
     const T_queue_elment_t &msg = msg_;
     const uint8_t &msg_priority = msg_priority_;
 };
@@ -611,12 +612,12 @@ private:
         id_ = os_chck(osEventFlagsNew(&attr));
         return id_;
     };
-    
+
 protected:
     osEventFlagsId_t id_;
 
 public:
-    cpp_os_event(const char * _name = NULL):
+    cpp_os_event(const char *_name = NULL):
         cpp_os(_name)
     {};
 
@@ -657,12 +658,12 @@ private:
         {
             .name      = name,
             .attr_bits = flags,
-        #ifdef STATIC_CBM
+#ifdef STATIC_CBM
             .cb_mem    = &mcb,
             .cb_size   = sizeof(mcb),
-        #endif
+#endif
         };
-        
+
         id_ = os_chck(osMutexNew(&attr));
         return id_;
     };
@@ -674,12 +675,12 @@ protected:
 
 public:
     cpp_os_mutex(uint32_t _flags = mutex_recursive | mutex_robust | mutex_prio_inherit,
-                 const char * _name = NULL):
+                 const char *_name = NULL):
         cpp_os(_name),
         flags(_flags)
     {};
-    
-    cpp_os_mutex(const char * _name):
+
+    cpp_os_mutex(const char *_name):
         cpp_os_mutex(mutex_recursive | mutex_robust | mutex_prio_inherit, _name)
     {};
 
@@ -702,7 +703,7 @@ public:
 /***************************************************************************************************
  *                                     GLOBAL VARIABLES
  **************************************************************************************************/
-    
+
 /***************************************************************************************************
  *                                       END OF FILE
  **************************************************************************************************/

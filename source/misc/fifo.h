@@ -10,16 +10,16 @@
  ***************************************************************************************************
  *   File:          fifo.h
  *   Description:   библиотека для fifo
- *   
+ *
  *   структура для FIFO должна выглядеть так:
- *   
+ *
  *   typedef struct
  *   {
  *       volatile counter_t begin_idx;
  *       volatile counter_t end_idx;
  *       data_t data[SIZE];
  *   } queue_t;
- *   
+ *
  *   SIZE - обязательно степень двойки
  *   counter_t - целый беззнаковый тип
  *   data_t - произвольный тип данных
@@ -45,16 +45,25 @@
 
 #define FIFO_COUNTOF(queue)                 (sizeof((queue).data)/sizeof(*((queue).data)))
 
-#define FIFO_LEN_GET(queue)                 ((uint32_t)((queue).end_idx - (queue).begin_idx))
-#define FIFO_ADD(queue, value)              ((queue).data[(queue).end_idx++ & (countof((queue).data) - 1)] = (value))
-#define FIFO_WRITE_ITEM(queue, item, value) ((queue).data[(((queue).begin_idx) + (item)) & (countof((queue).data) - 1)] = (value))
-#define FIFO_EXTRACT(queue)                 ((queue).data[(queue).begin_idx++ & (countof((queue).data) - 1)])
-#define FIFO_READ_HEAD(queue)               ((queue).data[(queue).begin_idx & (countof((queue).data) - 1)])
-#define FIFO_READ_ITEM(queue, item)         ((queue).data[(((queue).begin_idx) + (item)) & (countof((queue).data) - 1)])
-#define FIFO_CLEAR(queue)                   ((queue).end_idx = (queue).begin_idx)
-#define FIFO_IS_EMPTY(queue)                ((queue).end_idx == (queue).begin_idx)
-#define FIFO_IS_FULL(queue)                 (FIFO_LEN_GET(queue) >= countof((queue).data))
- 
+#define FIFO_LEN_GET(queue)                 \
+    ((uint32_t)((queue).end_idx - (queue).begin_idx))
+#define FIFO_ADD(queue, value)              \
+    ((queue).data[(queue).end_idx++ & (countof((queue).data) - 1)] = (value))
+#define FIFO_WRITE_ITEM(queue, item, value) \
+    ((queue).data[(((queue).begin_idx) + (item)) & (countof((queue).data) - 1)] = (value))
+#define FIFO_EXTRACT(queue)                 \
+    ((queue).data[(queue).begin_idx++ & (countof((queue).data) - 1)])
+#define FIFO_READ_HEAD(queue)               \
+    ((queue).data[(queue).begin_idx & (countof((queue).data) - 1)])
+#define FIFO_READ_ITEM(queue, item)         \
+    ((queue).data[(((queue).begin_idx) + (item)) & (countof((queue).data) - 1)])
+#define FIFO_CLEAR(queue)                   \
+    ((queue).end_idx = (queue).begin_idx)
+#define FIFO_IS_EMPTY(queue)                \
+    ((queue).end_idx == (queue).begin_idx)
+#define FIFO_IS_FULL(queue)                 \
+    (FIFO_LEN_GET(queue) >= countof((queue).data))
+
 /***************************************************************************************************
  *                                          PUBLIC TYPES                                           *
  **************************************************************************************************/
@@ -79,20 +88,20 @@ typedef enum
 } fifo_size_t;
 
 // Округление до ближайшей целой степени двойки
-#define FIFO_SIZE_CEIL(SIZE) (\
-    (SIZE -  1 | SIZE >>  1 | SIZE >>  2 | SIZE >>  3 | SIZE >>  4 | SIZE >>  5 | SIZE >>  6 | \
-    SIZE >>  7 | SIZE >>  8 | SIZE >>  9 | SIZE >> 10 | SIZE >> 11 | SIZE >> 12 | SIZE >> 13 | \
-    SIZE >> 14 | SIZE >> 15 | SIZE >> 16 | SIZE >> 17 | SIZE >> 18 | SIZE >> 19 | SIZE >> 20 | \
-    SIZE >> 21 | SIZE >> 22 | SIZE >> 23 | SIZE >> 24 | SIZE >> 25 | SIZE >> 26 | SIZE >> 27 | \
-    SIZE >> 28 | SIZE >> 29 | SIZE >> 30 | SIZE >> 31 ) + 1)
+#define FIFO_SIZE_CEIL(SIZE)                                                                     \
+    ((SIZE -   1 | SIZE >>  1 | SIZE >>  2 | SIZE >>  3 | SIZE >>  4 | SIZE >>  5 | SIZE >>  6 | \
+      SIZE >>  7 | SIZE >>  8 | SIZE >>  9 | SIZE >> 10 | SIZE >> 11 | SIZE >> 12 | SIZE >> 13 | \
+      SIZE >> 14 | SIZE >> 15 | SIZE >> 16 | SIZE >> 17 | SIZE >> 18 | SIZE >> 19 | SIZE >> 20 | \
+      SIZE >> 21 | SIZE >> 22 | SIZE >> 23 | SIZE >> 24 | SIZE >> 25 | SIZE >> 26 | SIZE >> 27 | \
+      SIZE >> 28 | SIZE >> 29 | SIZE >> 30 | SIZE >> 31 ) + 1)
 
 #define FIFO_TYPEDEF(data_t, count_t, SIZE)\
-struct                 \
-{                      \
-    volatile count_t   \
-    begin_idx, end_idx;\
-    data_t data[FIFO_SIZE_CEIL(SIZE)]; \
-}
+    struct                                 \
+    {                                      \
+        volatile count_t                   \
+        begin_idx, end_idx;                \
+        data_t data[FIFO_SIZE_CEIL(SIZE)]; \
+    }
 
 /***************************************************************************************************
  *                                         GLOBAL VARIABLES                                        *

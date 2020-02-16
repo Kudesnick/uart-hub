@@ -390,6 +390,26 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>bsp</GroupName>
+          <Files>
+            <File>
+              <FileName>bsp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\source\bsp\bsp.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_flash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\source\bsp\bsp_flash.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_cdc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\source\bsp\bsp_cdc.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>cpp_os</GroupName>
           <Files>
             <File>
@@ -425,21 +445,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>sett</GroupName>
-          <Files>
-            <File>
-              <FileName>sett_def.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\source\sett\sett_def.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>sett_work.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\source\sett\sett_work.cpp</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>rtt</GroupName>
           <Files>
             <File>
@@ -455,22 +460,17 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>bsp</GroupName>
+          <GroupName>sett</GroupName>
           <Files>
             <File>
-              <FileName>bsp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\source\bsp\bsp.c</FilePath>
+              <FileName>sett_def.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\source\sett\sett_def.cpp</FilePath>
             </File>
             <File>
-              <FileName>bsp_flash.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\source\bsp\bsp_flash.c</FilePath>
-            </File>
-            <File>
-              <FileName>bsp_cdc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\source\bsp\bsp_cdc.c</FilePath>
+              <FileName>sett_work.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\source\sett\sett_work.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -875,6 +875,26 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>bsp</GroupName>
+          <Files>
+            <File>
+              <FileName>bsp.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\source\bsp\bsp.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_flash.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\source\bsp\bsp_flash.c</FilePath>
+            </File>
+            <File>
+              <FileName>bsp_cdc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\source\bsp\bsp_cdc.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>cpp_os</GroupName>
           <Files>
             <File>
@@ -910,21 +930,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>sett</GroupName>
-          <Files>
-            <File>
-              <FileName>sett_def.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\source\sett\sett_def.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>sett_work.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\source\sett\sett_work.cpp</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>rtt</GroupName>
           <Files>
             <File>
@@ -940,22 +945,17 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>bsp</GroupName>
+          <GroupName>sett</GroupName>
           <Files>
             <File>
-              <FileName>bsp.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\source\bsp\bsp.c</FilePath>
+              <FileName>sett_def.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\source\sett\sett_def.cpp</FilePath>
             </File>
             <File>
-              <FileName>bsp_flash.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\source\bsp\bsp_flash.c</FilePath>
-            </File>
-            <File>
-              <FileName>bsp_cdc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\source\bsp\bsp_cdc.c</FilePath>
+              <FileName>sett_work.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\source\sett\sett_work.cpp</FilePath>
             </File>
           </Files>
         </Group>

@@ -40,13 +40,6 @@
  *                                      PRIVATE TYPES
  **************************************************************************************************/
 
-typedef enum
-{
-    BSP_FLASH_MANAGER_IDLE,
-    BSP_FLASH_MANAGER_WORK,
-    BSP_FLASH_MANAGER_WAIT
-} bsp_flash_manager_state_t;
-
 /***************************************************************************************************
  *                               PRIVATE FUNCTION PROTOTYPES
  **************************************************************************************************/
@@ -56,7 +49,6 @@ typedef enum
  **************************************************************************************************/
 
 static bsp_flash_async_callback_t callback;
-static bsp_flash_manager_state_t bsp_flash_manager_state = BSP_FLASH_MANAGER_IDLE;
 static bsp_flash_addr_t addr;
 static const void *src_ptr;
 static bsp_flash_size_t len;
@@ -86,92 +78,9 @@ bsp_result_t check_alight_addres_and_data_len(uint32_t _addr, bsp_flash_size_t _
     return BSP_RESULT_OK;
 }
 
-static void bsp_flash_manager_memcpy(void)
-{
-    uint8_t remainder;
-
-    remainder = len % 4;
-    if (   remainder == 3
-        || remainder == 1)
-    {
-        len -= 1;
-        HAL_FLASH_Program_IT(FLASH_TYPEPROGRAM_BYTE, (uint32_t)addr, *(uint8_t *)src_ptr);
-        addr += 1;
-        src_ptr = (uint8_t *)src_ptr + 1;
-        if (len > 0)
-        {
-            bsp_flash_manager_state = BSP_FLASH_MANAGER_WAIT;
-        }
-
-        return;
-    }
-    if (remainder == 2)
-    {
-        len -= 2;
-        HAL_FLASH_Program_IT(FLASH_TYPEPROGRAM_HALFWORD, *(uint32_t *)addr, *(uint16_t *)src_ptr);
-        addr += 2;
-        src_ptr = (uint8_t *)src_ptr + 2;
-        if (len > 0)
-        {
-            bsp_flash_manager_state = BSP_FLASH_MANAGER_WAIT;
-        }
-
-        return;
-    }
-
-    len -= 4;
-    HAL_FLASH_Program_IT(FLASH_TYPEPROGRAM_WORD, (uint32_t)addr, *((uint32_t *)src_ptr));
-    addr += 4;
-    src_ptr = (uint8_t *)src_ptr + 4;
-    if (len > 0)
-    {
-        bsp_flash_manager_state = BSP_FLASH_MANAGER_WAIT;
-    }
-}
-
-void HAL_FLASH_EndOfOperationCallback(uint32_t ReturnValue)
-{
-    if (len)
-    {
-        return;
-    }
-    HAL_FLASH_Lock();
-    len = 0;
-    bsp_flash_manager_state = BSP_FLASH_MANAGER_IDLE;
-    callback(BSP_RESULT_OK);
-}
-
-void HAL_FLASH_OperationErrorCallback(uint32_t ReturnValue)
-{
-    HAL_FLASH_Lock();
-    len = 0;
-    bsp_flash_manager_state = BSP_FLASH_MANAGER_IDLE;
-    callback(BSP_RESULT_ERR);
-}
-
-void FLASH_IRQHandler(void)
-{
-    HAL_FLASH_IRQHandler();
-}
-
 /***************************************************************************************************
  *                                    PUBLIC FUNCTIONS
  **************************************************************************************************/
-
-void bsp_flash_init(void)
-{
-    HAL_NVIC_SetPriority(FLASH_IRQn, 15, 0);
-    HAL_NVIC_EnableIRQ(FLASH_IRQn);
-}
-
-void bsp_flash_manager(void)
-{
-    if (bsp_flash_manager_state == BSP_FLASH_MANAGER_WAIT)
-    {
-        bsp_flash_manager_state = BSP_FLASH_MANAGER_WORK;
-        bsp_flash_manager_memcpy();
-    }
-}
 
 bsp_flash_size_t bsp_flash_get_size(void)
 {
@@ -317,130 +226,6 @@ bsp_result_t bsp_flash_write_word_sync(bsp_flash_addr_t _addr, bsp_flash_word_t 
     res = status == HAL_OK ? BSP_RESULT_OK : BSP_RESULT_ERR;
 
     return res;
-}
-
-bsp_result_t bsp_flash_memcpy_sync(bsp_flash_addr_t _addr,
-                                   const void *_src_ptr,
-                                   bsp_flash_size_t _len)
-{
-    uint8_t remainder;
-    bsp_result_t res = BSP_RESULT_ERR;
-    HAL_StatusTypeDef status;
-
-    res = check_alight_addres_and_data_len((uint32_t)_addr, _len);
-    if (res == BSP_RESULT_ERR)
-    {
-        return res;
-    }
-
-    HAL_FLASH_Unlock();
-
-    remainder = _len % 4;
-    if (remainder == 2)
-    {
-        status = HAL_FLASH_Program(FLASH_TYPEPROGRAM_HALFWORD, (uint32_t)_addr, *(uint16_t *)_src_ptr);
-        if (status != HAL_OK)
-        {
-            HAL_FLASH_Lock();
-            return res;
-        }
-        remainder -= 2;
-        _len -= 2;
-        _addr += 2;
-        _src_ptr = (uint8_t *)_src_ptr + 2;
-    }
-
-    for (uint8_t i = 0; i < _len; i += 4)
-    {
-        status = HAL_FLASH_Program(FLASH_TYPEPROGRAM_WORD, (uint32_t)_addr + i, *((uint32_t *)_src_ptr + (i / 4)));
-        if (status != HAL_OK)
-        {
-            break;
-        }
-    }
-
-    HAL_FLASH_Lock();
-
-    res = status == HAL_OK ? BSP_RESULT_OK : BSP_RESULT_ERR;
-
-    return res;
-}
-
-void bsp_flash_erase_async(bsp_flash_page_t _page, bsp_flash_async_callback_t _callback)
-{
-    FLASH_EraseInitTypeDef erase_init_struct =
-    {
-        .TypeErase = FLASH_TYPEERASE_SECTORS,
-        .NbSectors = 1,
-        .VoltageRange = FLASH_VOLTAGE_RANGE_3
-    };
-
-    erase_init_struct.Sector = _page;
-    if (bsp_flash_manager_state == BSP_FLASH_MANAGER_IDLE)
-    {
-        bsp_flash_manager_state = BSP_FLASH_MANAGER_WORK;
-        callback = _callback;
-        HAL_FLASH_Unlock();
-        HAL_FLASHEx_Erase_IT(&erase_init_struct);
-    }
-    else
-    {
-        _callback(BSP_RESULT_ERR);
-    }
-}
-
-void bsp_flash_write_word_async(bsp_flash_addr_t _addr,
-                                bsp_flash_word_t _data,
-                                bsp_flash_async_callback_t _callback)
-{
-    bsp_result_t res;
-
-    res = check_alight_addres_and_data_len((uint32_t)_addr, 2);
-    if (res == BSP_RESULT_ERR)
-    {
-        _callback(BSP_RESULT_ERR);
-    }
-
-    if (bsp_flash_manager_state == BSP_FLASH_MANAGER_IDLE)
-    {
-        bsp_flash_manager_state = BSP_FLASH_MANAGER_WORK;
-        callback = _callback;
-        HAL_FLASH_Unlock();
-        HAL_FLASH_Program_IT(FLASH_TYPEPROGRAM_WORD, (uint32_t)_addr, _data);
-    }
-    else
-    {
-        _callback(BSP_RESULT_ERR);
-    }
-}
-
-void bsp_flash_memcpy_async(bsp_flash_addr_t _addr,
-                            const void *_src_ptr,
-                            bsp_flash_size_t _len,
-                            bsp_flash_async_callback_t _callback)
-{
-    bsp_result_t res;
-
-    res = check_alight_addres_and_data_len((uint32_t)_addr, _len);
-    if (res == BSP_RESULT_ERR)
-    {
-        _callback(BSP_RESULT_ERR);
-    }
-
-    if (bsp_flash_manager_state == BSP_FLASH_MANAGER_IDLE)
-    {
-        bsp_flash_manager_state = BSP_FLASH_MANAGER_WORK;
-        HAL_FLASH_Unlock();
-        addr = _addr;
-        len = _len;
-        src_ptr = _src_ptr;
-        callback = _callback;
-        bsp_flash_manager_memcpy();
-    }
-    else
-    {
-        _callback(BSP_RESULT_ERR);
-    }
 }
 
 /***************************************************************************************************

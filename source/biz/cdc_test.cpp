@@ -1,21 +1,21 @@
 /***************************************************************************************************
- *   Project:      
- *   Author:       
+ *   Project:
+ *   Author:
  ***************************************************************************************************
- *   Distribution: 
+ *   Distribution:
  *
  ***************************************************************************************************
  *   MCU Family:    STM32F
  *   Compiler:      ARMCC
  ***************************************************************************************************
  *   File:          cdc_test.cpp
- *   Description:  
+ *   Description:
  *
  ***************************************************************************************************
  *   History:       16.02.2020 - file created
  *
  **************************************************************************************************/
- 
+
 /***************************************************************************************************
  *                                      INCLUDED FILES
  **************************************************************************************************/
@@ -33,7 +33,7 @@
 /***************************************************************************************************
  *                                       DEFINITIONS
  **************************************************************************************************/
- 
+
 /***************************************************************************************************
  *                                      PRIVATE TYPES
  **************************************************************************************************/
@@ -70,13 +70,13 @@ private:
     void timer_func()
     {
         bool result = bsp_cdc_is_configured();
-    
+
         if (!result)
         {
             if (last_result)
             {
                 fprintf(stderr, "<cdc> USB VCP stopped\r\n");
-                
+
                 bsp_cdc_deinit();
             }
             else
@@ -88,20 +88,20 @@ private:
         {
             fprintf(stderr, "<cdc> USB CDC runing\r\n");
             fprintf(stderr, "If you use Putty, you must select this settings:\r\n"
-                "  - in bookmark 'connection/serial' disable 'flow control';\r\n"
-                "  - in bookmark 'Terminal' check 'implict CR in every LF',\r\n"
-                "    set 'Force on' in 'Local echo' and 'Local line ending'.\r\n"
-            );
+                    "  - in bookmark 'connection/serial' disable 'flow control';\r\n"
+                    "  - in bookmark 'Terminal' check 'implict CR in every LF',\r\n"
+                    "    set 'Force on' in 'Local echo' and 'Local line ending'.\r\n"
+                   );
 
         }
-        
+
         last_result = result;
     };
-    
+
 public:
     using cpp_os_timer::cpp_os_timer;
 } cdc = {1000, true, "cdc"};
- 
+
 class : public cpp_os_thread<>
 {
 private:
@@ -110,7 +110,7 @@ private:
     {
         cdc.start();
 
-        for(;;)
+        for (;;)
         {
             static char buf[256];
 
@@ -120,7 +120,13 @@ private:
 
             uint16_t len = strlen(buf);
 
-            if (len < 1 || len >= sizeof(buf)) continue;
+            if (false
+                || len < 1
+                || len >= sizeof(buf)
+               )
+            {
+                continue;
+            }
 
             printf("<cdc> echo: %s\r\n", buf);
         }
@@ -133,7 +139,7 @@ public:
 /***************************************************************************************************
  *                                    PUBLIC FUNCTIONS
  **************************************************************************************************/
- 
+
 /***************************************************************************************************
  *                                       END OF FILE
  **************************************************************************************************/

@@ -29,8 +29,8 @@
 #include "bsp_flash.h"
 
 #ifdef RTE_CMSIS_RTOS2
-// see https://www.keil.com/pack/doc/STM32Cube/General/html/cubemx__r_t_x.html
-#include "cmsis_os2.h"      // ARM::CMSIS:RTOS:Keil RTX
+    // see https://www.keil.com/pack/doc/STM32Cube/General/html/cubemx__r_t_x.html
+    #include "cmsis_os2.h"      // ARM::CMSIS:RTOS:Keil RTX
 #endif
 
 /***************************************************************************************************
@@ -62,21 +62,31 @@
  **************************************************************************************************/
 
 #ifdef RTE_CMSIS_RTOS2
-uint32_t HAL_GetTick(void) 
+uint32_t HAL_GetTick(void)
 {
     static uint32_t ticks = 0U;
-    
+
     if (osKernelGetState() == osKernelRunning)
     {
         return osKernelGetTickCount();
     }
-    
+
     // If Kernel is not running wait approximately 1 ms then increment
     // and return auxiliary tick counter value
     for (uint32_t i = (SystemCoreClock >> 14U); i > 0U; i--)
     {
-        __NOP(); __NOP(); __NOP(); __NOP(); __NOP(); __NOP();
-        __NOP(); __NOP(); __NOP(); __NOP(); __NOP(); __NOP();
+        __NOP();
+        __NOP();
+        __NOP();
+        __NOP();
+        __NOP();
+        __NOP();
+        __NOP();
+        __NOP();
+        __NOP();
+        __NOP();
+        __NOP();
+        __NOP();
     }
     return ++ticks;
 }
@@ -90,8 +100,8 @@ void SysTick_Handler(void)
 static void Error_Handler(void)
 {
     fprintf(stderr, "<bsp> Error_Handler!");
-    
-    for(;;);
+
+    for (;;);
 }
 
 #ifdef  USE_FULL_ASSERT
@@ -102,12 +112,12 @@ static void Error_Handler(void)
   * @param  line: assert_param error line source number
   * @return None
   */
-void assert_failed(uint8_t* file, uint32_t line)
-{ 
+void assert_failed(uint8_t *file, uint32_t line)
+{
     // User can add his own implementation to report the file name and line number
     fprintf(stderr, "<bsp> Wrong parameters value: file %s on line %d\r\n", file, line);
-    
-    for(;;);
+
+    for (;;);
 }
 #endif
 
@@ -123,12 +133,12 @@ void SystemClock_Config(void)
     RCC_OscInitTypeDef RCC_OscInitStruct = {0};
     RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
     RCC_PeriphCLKInitTypeDef PeriphClkInitStruct = {0};
-    
-    /** Configure the main internal regulator output voltage 
+
+    /** Configure the main internal regulator output voltage
     */
     __HAL_RCC_PWR_CLK_ENABLE();
     __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
-    /** Initializes the CPU, AHB and APB busses clocks 
+    /** Initializes the CPU, AHB and APB busses clocks
     */
     RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSE;
 #if defined(HSE_ON)
@@ -136,7 +146,7 @@ void SystemClock_Config(void)
 #elif defined(HSE_BYPASS)
     RCC_OscInitStruct.HSEState = RCC_HSE_BYPASS;
 #else
-    #error HSE Source not configure
+#error HSE Source not configure
 #endif
     RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
     RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
@@ -149,15 +159,15 @@ void SystemClock_Config(void)
     {
         Error_Handler();
     }
-    /** Initializes the CPU, AHB and APB busses clocks 
+    /** Initializes the CPU, AHB and APB busses clocks
     */
-    RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
-                                |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
+    RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK
+                                  | RCC_CLOCKTYPE_PCLK1 | RCC_CLOCKTYPE_PCLK2;
     RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
     RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
     RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV2;
     RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
-    
+
     if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_4) != HAL_OK)
     {
         Error_Handler();
@@ -185,8 +195,6 @@ void bsp_init(void)
 
     SystemClock_Config();
     SystemCoreClockUpdate();
-
-//    bsp_flash_init();
 }
 
 /**************************************************************************************************

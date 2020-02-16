@@ -95,7 +95,7 @@ static void _manual_push_disconnect(void)
 // \param[in]   line_coding   pointer to CDC_LINE_CODING structure.
 // \return      true          set line coding request processed.
 // \return      false         set line coding request not supported or not processed.
-bool USBD_CDC0_ACM_SetLineCoding (const CDC_LINE_CODING *line_coding)
+bool USBD_CDC0_ACM_SetLineCoding(const CDC_LINE_CODING *line_coding)
 {
     // Фиктивные настройки бодрейта необходимы для некоторых эмуляторов терминала
     _cdc0_acm_line_coding = *line_coding;
@@ -107,7 +107,7 @@ bool USBD_CDC0_ACM_SetLineCoding (const CDC_LINE_CODING *line_coding)
 // \param[out]  line_coding   pointer to CDC_LINE_CODING structure.
 // \return      true          get line coding request processed.
 // \return      false         get line coding request not supported or not processed.
-bool USBD_CDC0_ACM_GetLineCoding (CDC_LINE_CODING *line_coding)
+bool USBD_CDC0_ACM_GetLineCoding(CDC_LINE_CODING *line_coding)
 {
     // Фиктивные настройки бодрейта необходимы для некоторых эмуляторов терминала
     *line_coding = _cdc0_acm_line_coding;
@@ -121,7 +121,7 @@ bool USBD_CDC0_ACM_GetLineCoding (CDC_LINE_CODING *line_coding)
 //                - bit 1: RTS state
 // \return      true          set control line state request processed.
 // \return      false         set control line state request not supported or not processed.
-bool USBD_CDC0_ACM_SetControlLineState (uint16_t state)
+bool USBD_CDC0_ACM_SetControlLineState(uint16_t state)
 {
     // Add code for set control line state
 
@@ -132,13 +132,13 @@ bool USBD_CDC0_ACM_SetControlLineState (uint16_t state)
 
 // Called when new data was received.
 // \param [in]  len           number of bytes available for reading.
-void USBD_CDC0_ACM_DataReceived (uint32_t len)
+void USBD_CDC0_ACM_DataReceived(uint32_t len)
 {
     // Add code for handling new data reception
 }
 
 // Called when when all data was sent.
-void USBD_CDC0_ACM_DataSent (void)
+void USBD_CDC0_ACM_DataSent(void)
 {
     // Add code for handling new data send
 }
@@ -183,8 +183,8 @@ bool bsp_cdc_is_configured()
 
 int32_t bsp_cdc0_read_data(uint8_t *buf, int32_t len)
 {
-    return (USBD_CDC_ACM_DataAvailable(USBD_CDC_VCP)) ? 
-            USBD_CDC_ACM_ReadData(USBD_CDC_VCP, buf, len) : 0;
+    return (USBD_CDC_ACM_DataAvailable(USBD_CDC_VCP)) ?
+           USBD_CDC_ACM_ReadData(USBD_CDC_VCP, buf, len) : 0;
 }
 
 int32_t bsp_cdc0_write_data(const uint8_t *buf, int32_t len)

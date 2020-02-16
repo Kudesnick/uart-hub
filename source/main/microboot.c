@@ -1,15 +1,15 @@
 /***************************************************************************************************
- *   Project:     
+ *   Project:
  *   Author:        Stulov Tikhon (kudesnick@inbox.ru)
  ***************************************************************************************************
- *   Distribution:  
+ *   Distribution:
  *
  ***************************************************************************************************
  *   MCU Family:    STM32F
  *   Compiler:      ARMCC
  ***************************************************************************************************
  *   File:          main.c
- *   Description:   
+ *   Description:
  *
  ***************************************************************************************************
  *   History:       13.04.2019 - file created
@@ -42,7 +42,7 @@ typedef void (* pFunction)(void);
  **************************************************************************************************/
 
 //-- Функция перехода на основную прошивку
-static void goto_main(void) __attribute__((section("MICROBOOT_CODE"))) __attribute__((used)); 
+static void goto_main(void) __attribute__((section("MICROBOOT_CODE"))) __attribute__((used));
 
 /***************************************************************************************************
  *                                       PRIVATE DATA
@@ -53,9 +53,9 @@ volatile uint8_t stack[STACK_SIZE];
 //-- Формируем таблицу векторов прерываний для первичной инициализации
 volatile const struct
 {
-    void * stack_ptr;
+    void *stack_ptr;
     pFunction main_ptr;
-} vectors __attribute__((section("MICROBOOT_DATA"))) __attribute__((used)) = 
+} vectors __attribute__((section("MICROBOOT_DATA"))) __attribute__((used)) =
 {
     (void *)stack,
     goto_main
@@ -82,9 +82,9 @@ extern unsigned int Image$$ER_IROM1$$Base;
 //-- переход на основной загрузчик
 static void goto_main(void)
 {
-    typedef void (* pFunction)(void);    
-    __set_MSP(* (__IO uint32_t * ) ((uint32_t)&Image$$ER_IROM1$$Base));    
-    uint32_t jumpAddress = * (__IO uint32_t *) ((uint32_t)&Image$$ER_IROM1$$Base + 4);
+    typedef void (* pFunction)(void);
+    __set_MSP(* (__IO uint32_t *)((uint32_t)&Image$$ER_IROM1$$Base));
+    uint32_t jumpAddress = * (__IO uint32_t *)((uint32_t)&Image$$ER_IROM1$$Base + 4);
     pFunction JumpToApplication = (pFunction) jumpAddress;
     JumpToApplication();
 }

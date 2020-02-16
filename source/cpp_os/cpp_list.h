@@ -1,8 +1,8 @@
 /***************************************************************************************************
- *   Project:       
+ *   Project:
  *   Author:        Stulov Tikhon
  ***************************************************************************************************
- *   Distribution:  
+ *   Distribution:
  *
  ***************************************************************************************************
  *   MCU Family:    STM32F
@@ -13,7 +13,7 @@
  *                  классов в односвязный список. Формирование списка происходит на этапе запуска
  *                  программы до входа в main. При этом связанные объекты могут находиться в разных
  *                  модулях. От программиста не требуется вызова каких-либо инициализационных
- *                  функций. Доступ к элементам списка может осуществляться через статические 
+ *                  функций. Доступ к элементам списка может осуществляться через статические
  *                  функции класса.
  *
  ***************************************************************************************************
@@ -55,36 +55,42 @@
 template<typename T> class cpp_list
 {
 private:
-    static cpp_list * p_first_;
-    cpp_list * p_next_;
+    static cpp_list *p_first_;
+    cpp_list *p_next_;
 
 public:
-    
+
     // Конструктор по умолчанию.
     cpp_list():
         p_next_(NULL)
     {
-        static cpp_list * p_last_ = NULL;
-    
-        if (p_first_ == NULL) p_first_ = this;
-    
-        if (p_last_ != NULL) p_last_->p_next_ = this;
-        
+        static cpp_list *p_last_ = NULL;
+
+        if (p_first_ == NULL)
+        {
+            p_first_ = this;
+        }
+
+        if (p_last_ != NULL)
+        {
+            p_last_->p_next_ = this;
+        }
+
         p_last_ = this;
     };
-    
-    // Возвращает указатель на первый элемент списка 
-    static cpp_list * get_first(void)
+
+    // Возвращает указатель на первый элемент списка
+    static cpp_list *get_first(void)
     {
         return p_first_;
     };
-    
+
     // Возвращает указатель на следующий элемент списка
-    cpp_list * get_next(void)
+    cpp_list *get_next(void)
     {
         return p_next_;
     };
-    
+
     // Удаляет элемент из списка
     // Внимание! Элемент удаляется из списка, но фактически остается в памяти и не разрушается
     void del_item(void)
@@ -92,21 +98,21 @@ public:
         if (this == p_first_)
         {
             p_first_ = this->p_next_;
-            
+
             return;
         }
-        
-        cpp_list * prev_ptr = p_first_;
-        
-        for (cpp_list * curr_ptr = p_first_->p_next_;
-            curr_ptr != NULL;
-            curr_ptr = curr_ptr->p_next_
+
+        cpp_list *prev_ptr = p_first_;
+
+        for (cpp_list *curr_ptr = p_first_->p_next_;
+             curr_ptr != NULL;
+             curr_ptr = curr_ptr->p_next_
             )
         {
             if (this == curr_ptr)
             {
                 prev_ptr->p_next_ = curr_ptr->p_next_;
-                
+
                 return;
             }
             else
@@ -115,7 +121,7 @@ public:
             }
         }
     };
-    
+
     // Переместить элемент в начало списка
     void pop_item(void)
     {
@@ -123,46 +129,58 @@ public:
         p_next_ = p_first_;
         p_first_ = this;
     };
-    
+
     // Применить функцию последовательно ко всем элементам списка
     // Если функция, передаваемая в качестве аргумента возвращает false, то цикл прерывается
     static void enumerate(bool(* _enum_func)(T *&))
     {
-        if (_enum_func == NULL) return;
-        
-        for (T * el_ptr = static_cast<T *>(cpp_list::get_first());
+        if (_enum_func == NULL)
+        {
+            return;
+        }
+
+        for (T *el_ptr = static_cast<T *>(cpp_list::get_first());
              el_ptr != NULL;
              el_ptr = static_cast<T *>(el_ptr->cpp_list<T>::get_next())
-             )
+            )
         {
-            if (_enum_func(el_ptr) == false) break;
-        }    
+            if (_enum_func(el_ptr) == false)
+            {
+                break;
+            }
+        }
     };
-    
+
     // Применить функцию с параметром последовательно ко всем элементам списка
     // Если функция, передаваемая в качестве аргумента возвращает false, то цикл прерывается
-    static void * enumerate(void * _params, bool(* _enum_func)(T *&, void *))
+    static void *enumerate(void *_params, bool(* _enum_func)(T *&, void *))
     {
-        if (_enum_func == NULL) return NULL;
-    
-        for (T * el_ptr = static_cast<T *>(cpp_list::get_first());
+        if (_enum_func == NULL)
+        {
+            return NULL;
+        }
+
+        for (T *el_ptr = static_cast<T *>(cpp_list::get_first());
              el_ptr != NULL;
              el_ptr = static_cast<T *>(el_ptr->cpp_list<T>::get_next())
-             )
+            )
         {
-            if (_enum_func(el_ptr, _params) == false) break;
+            if (_enum_func(el_ptr, _params) == false)
+            {
+                break;
+            }
         }
-        
+
         return _params;
     };
 };
 
-template<typename T> cpp_list<T> * cpp_list<T>::p_first_ = NULL;
+template<typename T> cpp_list<T> *cpp_list<T>::p_first_ = NULL;
 
 /***************************************************************************************************
  *                                     GLOBAL VARIABLES
  **************************************************************************************************/
-    
+
 /***************************************************************************************************
  *                                       END OF FILE
  **************************************************************************************************/

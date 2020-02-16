@@ -1,15 +1,15 @@
 /***************************************************************************************************
- *   Project:     
+ *   Project:
  *   Author:        Stulov Tikhon (kudesnick@inbox.ru)
  ***************************************************************************************************
- *   Distribution:  
+ *   Distribution:
  *
  ***************************************************************************************************
  *   MCU Family:    STM32F
  *   Compiler:      ARMCC
  ***************************************************************************************************
  *   File:          flash_map.h
- *   Description:   
+ *   Description:
  *
  ***************************************************************************************************
  *   History:       14.11.2019 - file created
@@ -38,7 +38,7 @@
     #define FLASH_START         0x08000000 // Начальный адрес флеш-памяти
     #define PROTECTED_SIZE      0x00001000 // Размер неперепрошиваемой области
     // Смещение от таблицы векторов прерываний для размещения нестираемых настроек
-    #define RO_SETT_OFFSET      0x00000800 
+    #define RO_SETT_OFFSET      0x00000800
 
     #define APPL_START          0x08004000 // Стартовый адрес основной программы
 
@@ -65,17 +65,17 @@
 
 // Memory map vars
 // Стартовый адрес микрозагрузчика
-#define MICROBOOT_START     FLASH_START                            
+#define MICROBOOT_START     FLASH_START
 // Адрес настроек, прошиваемых на производстве
-#define HW_SETT_START       (FLASH_START + RO_SETT_OFFSET)         
+#define HW_SETT_START       (FLASH_START + RO_SETT_OFFSET)
 // Адрес основной страницы пользовательских настроек
-#define USR_SETT_MAIN_START (FLASH_START + PROTECTED_SIZE)         
+#define USR_SETT_MAIN_START (FLASH_START + PROTECTED_SIZE)
 // Адрес резервной страницы пользовательских настроек
-#define USR_SETT_MIRR_START (USR_SETT_MAIN_START + SETT_PAGE_SIZE) 
+#define USR_SETT_MIRR_START (USR_SETT_MAIN_START + SETT_PAGE_SIZE)
 // Адрес основного загрузчика
-#define BOOT_START          (USR_SETT_MIRR_START + SETT_PAGE_SIZE) 
+#define BOOT_START          (USR_SETT_MIRR_START + SETT_PAGE_SIZE)
 // Размер основного загрузчика
-#define BOOT_SIZE           (APPL_START - BOOT_START)     
+#define BOOT_SIZE           (APPL_START - BOOT_START)
 
 /***************************************************************************************************
  *                                      PUBLIC TYPES

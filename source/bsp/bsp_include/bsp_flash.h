@@ -38,7 +38,7 @@ extern "C" {
 /// Тип слова для записи во флеш
 typedef uint16_t bsp_flash_word_t;
 /// Тип указателя на адрес флеш-памяти
-typedef void * bsp_flash_addr_t;
+typedef void *bsp_flash_addr_t;
 /// Тип переменной, хранящей размер флеш-памяти или отдельных её страниц
 typedef uint32_t bsp_flash_size_t;
 /// Тип для последовательной нумерации страниц флеш-памяти
@@ -89,19 +89,19 @@ void bsp_flash_erase_async(bsp_flash_page_t _page, bsp_flash_async_callback_t _c
 bsp_result_t bsp_flash_write_word_sync(bsp_flash_addr_t _addr, bsp_flash_word_t _data);
 
 /// асинхронная запись слова
-void bsp_flash_write_word_async(bsp_flash_addr_t _addr, 
-                                bsp_flash_word_t _data, 
+void bsp_flash_write_word_async(bsp_flash_addr_t _addr,
+                                bsp_flash_word_t _data,
                                 bsp_flash_async_callback_t _callback);
 
 /// Синхронная функция - эквивалент memcpy
-bsp_result_t bsp_flash_memcpy_sync(bsp_flash_addr_t _addr, 
-                                   const void * _src_ptr, 
+bsp_result_t bsp_flash_memcpy_sync(bsp_flash_addr_t _addr,
+                                   const void *_src_ptr,
                                    bsp_flash_size_t _len);
 
 /// Асинхронная функция - эквивалент memcpy
-void bsp_flash_memcpy_async(bsp_flash_addr_t _addr, 
-                            const void * _src_ptr, 
-                            bsp_flash_size_t _len, 
+void bsp_flash_memcpy_async(bsp_flash_addr_t _addr,
+                            const void *_src_ptr,
+                            bsp_flash_size_t _len,
                             bsp_flash_async_callback_t _callback);
 
 #ifdef __cplusplus

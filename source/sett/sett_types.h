@@ -1,9 +1,9 @@
 
 /***************************************************************************************************
- *   Project:       
- *   Author:    Stulov Tikhon 
+ *   Project:
+ *   Author:    Stulov Tikhon
  ***************************************************************************************************
- *   Distribution: 
+ *   Distribution:
  *
  ***************************************************************************************************
  *   MCU Family:    STM32F
@@ -68,54 +68,57 @@ typedef enum : uint16_t
     */
 
     PARAM_ID_COUNT,
-    PARAM_ID_NA = 0x07FF  // Фейковый параметр - неопределенный ID. Всегда равен максимально возможному значению ID. 
+    PARAM_ID_NA = 0x07FF  // Фейковый параметр - неопределенный ID. Всегда равен максимально возможному значению ID.
 } PARAM_ID_TYPE_t;
 
 /**
- @brief:  
- @detail: 
+ @brief:
+ @detail:
  */
 typedef enum : uint8_t
 {
-    PARAM_TRIGGER_NA    = 0x0000, //  
-    PARAM_TRIGGER_ON    = 0x0001, //  
-    PARAM_TRIGGER_OFF   = 0x0002, //  
-    PARAM_TRIGGER_ERR   = 0x0003  //  
+    PARAM_TRIGGER_NA    = 0x0000, //
+    PARAM_TRIGGER_ON    = 0x0001, //
+    PARAM_TRIGGER_OFF   = 0x0002, //
+    PARAM_TRIGGER_ERR   = 0x0003  //
 } PARAM_TRIGGER_TYPE_t;
 
 /**
- @brief:  
- @detail: 
+ @brief:
+ @detail:
  */
 typedef enum : uint8_t
 {
-    PARAM_ACCESS_NO = 0x0000, //  
-    PARAM_ACCESS_RO = 0x0001, //  
-    PARAM_ACCESS_RW = 0x0002  //  
+    PARAM_ACCESS_NO = 0x0000, //
+    PARAM_ACCESS_RO = 0x0001, //
+    PARAM_ACCESS_RW = 0x0002  //
 } PARAM_ACCESS_TYPE_t;
 
 /**
- @brief:  
- @detail: 
+ @brief:
+ @detail:
  */
 typedef enum : uint8_t
 {
-    PARAM_DATA_TRIGGER_NA   = 0x0000, //  
-    PARAM_DATA_TRIGGER_ON   = 0x0001, //  
-    PARAM_DATA_TRIGGER_OFF  = 0x0002, //  
-    PARAM_DATA_BLOB         = 0x0003, //  
-    PARAM_DATA_1_BYTE       = 0x0004, //  
-    PARAM_DATA_2_BYTE       = 0x0005, //  
-    PARAM_DATA_4_BYTE       = 0x0006, //  
-    PARAM_DATA_8_BYTE       = 0x0007  //  
+    PARAM_DATA_TRIGGER_NA   = 0x0000, //
+    PARAM_DATA_TRIGGER_ON   = 0x0001, //
+    PARAM_DATA_TRIGGER_OFF  = 0x0002, //
+    PARAM_DATA_BLOB         = 0x0003, //
+    PARAM_DATA_1_BYTE       = 0x0004, //
+    PARAM_DATA_2_BYTE       = 0x0005, //
+    PARAM_DATA_4_BYTE       = 0x0006, //
+    PARAM_DATA_8_BYTE       = 0x0007  //
 } PARAM_DATA_TYPE_t;
 
 // структура заголовка параметра
 __PACKED_STRUCT param_header_t
 {
-    uint16_t id          : HEADER_FIELD_LEN_ID     ; // id параметра (PARAM_ID_TYPE_t)
-    uint16_t secure_flag : HEADER_FIELD_LEN_SECURE ; // Права доступа (param_secure_flag_t)
-    uint16_t state       : HEADER_FIELD_LEN_STATE  ; // Поле состояния / размера данных (PARAM_DATA_TYPE_t)
+uint16_t id          :
+    HEADER_FIELD_LEN_ID     ; // id параметра (PARAM_ID_TYPE_t)
+uint16_t secure_flag :
+    HEADER_FIELD_LEN_SECURE ; // Права доступа (param_secure_flag_t)
+uint16_t state       :
+    HEADER_FIELD_LEN_STATE  ; // Поле состояния / размера данных (PARAM_DATA_TYPE_t)
 };
 
 // параметр-триггер

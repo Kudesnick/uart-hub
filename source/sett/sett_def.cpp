@@ -1,8 +1,8 @@
 /***************************************************************************************************
- *   Project:       
- *   Author:        Stulov Tikhon 
+ *   Project:
+ *   Author:        Stulov Tikhon
  ***************************************************************************************************
- *   Distribution: 
+ *   Distribution:
  *
  ***************************************************************************************************
  *   MCU Family:    STM32F
@@ -46,11 +46,11 @@ const params_users_t *const sett_usr_mirr_ptr = (params_users_t *)USR_SETT_MIRR_
  */
 volatile const params_users_t sett_usr_def;
 
-cpp_rw_params sett_usr = 
+cpp_rw_params sett_usr =
 {
     (params_base_t *)sett_usr_main_ptr,
     (params_base_t *)sett_usr_mirr_ptr,
-    (params_base_t *)&sett_usr_def
+    (params_base_t *) &sett_usr_def
 };
 
 const params_users_t *const &sett_usr_param = sett_usr_main_ptr;

@@ -1,15 +1,15 @@
 /***************************************************************************************************
- *   Project:     
+ *   Project:
  *   Author:        Stulov Tikhon (kudesnick@inbox.ru)
  ***************************************************************************************************
- *   Distribution:  
+ *   Distribution:
  *
  ***************************************************************************************************
  *   MCU Family:    STM32F
  *   Compiler:      ARMCC
  ***************************************************************************************************
  *   File:          main.c
- *   Description:   
+ *   Description:
  *
  ***************************************************************************************************
  *   History:       13.04.2019 - file created
@@ -73,27 +73,27 @@
     function without parameters.
     see http://www.keil.com/support/man/docs/armclang_mig/armclang_mig_udb1499267612612.htm
     */
-    __asm (".global __ARM_use_no_argv\n\t" "__ARM_use_no_argv:\n\t");
+    __asm(".global __ARM_use_no_argv\n\t" "__ARM_use_no_argv:\n\t");
 #endif
 
 int main(void)
 {
     fprintf(stderr, "\033[31mC\033[32mO\033[33mL\033[34mO\033[35mR\033[42m \033[0m"
-       "\033[36mT\033[37mE\033[30m\033[47mS\033[0mT\r\n"); // Color test
+            "\033[36mT\033[37mE\033[30m\033[47mS\033[0mT\r\n"); // Color test
     fprintf(stderr, "Runing main function..\r\n");
 
     fprintf(stderr, "BSP init..\r\n");
     bsp_init();
-    
+
     fprintf(stderr, "FLASH settings test and repair..\r\n");
     sett_usr.test_and_repair();
 
     fprintf(stderr, "Starting OS..\r\n");
-    
+
     cpp_os::create_os(true);
-    
+
     BRK_PTR("Main function terminated.");
-    
+
     return 0;
 }
 
