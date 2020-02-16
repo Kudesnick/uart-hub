@@ -51,7 +51,7 @@ extern "C" {
  *
  *  @return    Успешность выполнения функции
  */
-bsp_result_t bsp_vcp_init();
+bsp_result_t bsp_cdc_init();
 
 /**
  *  @brief     Функция де-инициализирует VCP
@@ -60,7 +60,7 @@ bsp_result_t bsp_vcp_init();
  *
  *  @return    Успешность выполнения функции
  */
-bsp_result_t bsp_vcp_deinit();
+bsp_result_t bsp_cdc_deinit();
 
 /**
  *  @brief     Функция проверки статуса VCP
@@ -69,7 +69,7 @@ bsp_result_t bsp_vcp_deinit();
  *  @return    true - устройство сконфигурировано и готово для коммуникации
  *             false - устройство не сконфигурировано и не готово для коммуникации
  */
-bool bsp_vcp_is_configured();
+bool bsp_cdc_is_configured();
 
 /**
  *  @brief     Функция для считывания байт из входящего буфера
@@ -80,7 +80,7 @@ bool bsp_vcp_is_configured();
  *
  *  @return    Кол-во считанных байт. Отрицательное значение возвращается при ошибке
  */
-int32_t bsp_vcp_read_data(uint8_t *buf, int32_t len);
+int32_t bsp_cdc0_read_data(uint8_t *buf, int32_t len);
 
 /**
  *  @brief     Функция для отправки байт в исходящий буфер
@@ -92,11 +92,11 @@ int32_t bsp_vcp_read_data(uint8_t *buf, int32_t len);
  *  @return    Кол-во байт отправленных в исходящий буфер. Отрицательное значение возвращается
  *             при ошибке
  */
-int32_t bsp_vcp_write_data(const uint8_t *buf, int32_t len);
+int32_t bsp_cdc0_write_data(const uint8_t *buf, int32_t len);
 
-int bsp_vcp_put_char(int ch);
+int bsp_cdc0_put_char(int ch);
 
-int bsp_vcp_get_char(void);
+int bsp_cdc0_get_char(void);
 
 #ifdef __cplusplus
 } // extern "C"

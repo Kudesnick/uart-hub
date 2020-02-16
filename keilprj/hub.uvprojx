@@ -381,6 +381,13 @@
       <Groups>
         <Group>
           <GroupName>biz</GroupName>
+          <Files>
+            <File>
+              <FileName>cdc_test.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\source\biz\cdc_test.cpp</FilePath>
+            </File>
+          </Files>
         </Group>
         <Group>
           <GroupName>cpp_os</GroupName>
@@ -461,14 +468,9 @@
               <FilePath>..\source\bsp\bsp_flash.c</FilePath>
             </File>
             <File>
-              <FileName>bsp_vcp.c</FileName>
+              <FileName>bsp_cdc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\source\bsp\bsp_vcp.c</FilePath>
-            </File>
-            <File>
-              <FileName>CAN_STM32F4xx.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\source\bsp\CAN_STM32F4xx.c</FilePath>
+              <FilePath>..\source\bsp\bsp_cdc.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -864,6 +866,13 @@
       <Groups>
         <Group>
           <GroupName>biz</GroupName>
+          <Files>
+            <File>
+              <FileName>cdc_test.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\source\biz\cdc_test.cpp</FilePath>
+            </File>
+          </Files>
         </Group>
         <Group>
           <GroupName>cpp_os</GroupName>
@@ -944,14 +953,9 @@
               <FilePath>..\source\bsp\bsp_flash.c</FilePath>
             </File>
             <File>
-              <FileName>bsp_vcp.c</FileName>
+              <FileName>bsp_cdc.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\source\bsp\bsp_vcp.c</FilePath>
-            </File>
-            <File>
-              <FileName>CAN_STM32F4xx.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\source\bsp\CAN_STM32F4xx.c</FilePath>
+              <FilePath>..\source\bsp\bsp_cdc.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1296,6 +1300,12 @@
           <targetInfo name="debug_custom_F413VG"/>
           <targetInfo name="debug_nucleo_F413ZH"/>
         </targetInfos>
+      </file>
+      <file attr="config" category="header" name="USB\Config\USBD_Config_CDC.h" version="5.2.0">
+        <instance index="1" removed="1">RTE\USB\USBD_Config_CDC_1.h</instance>
+        <component Cbundle="MDK-Plus" Cclass="USB" Cgroup="Device" Csub="CDC" Cvendor="Keil" Cversion="6.13.7" condition="USB Core and Device Instance and Device Driver" maxInstances="8"/>
+        <package name="MDK-Middleware" schemaVersion="1.4" url="http://www.keil.com/pack/" vendor="Keil" version="7.10.0"/>
+        <targetInfos/>
       </file>
     </files>
   </RTE>

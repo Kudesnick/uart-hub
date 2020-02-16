@@ -24,7 +24,7 @@
 #include CMSIS_device_header
 #include "stm32f4xx_hal.h"
 
-#include "bsp_vcp.h"
+#include "bsp_cdc.h"
 #include "rl_usb.h"
 #include "USBD_Config_CDC_0.h"
 #include "rtx_os.h"
@@ -50,7 +50,7 @@
  *                                       PRIVATE DATA
  **************************************************************************************************/
 
-static CDC_LINE_CODING _cdc_acm_line_coding;
+static CDC_LINE_CODING _cdc0_acm_line_coding;
 
 /***************************************************************************************************
  *                                       PUBLIC DATA
@@ -65,9 +65,13 @@ static CDC_LINE_CODING _cdc_acm_line_coding;
  **************************************************************************************************/
 
 /***************************************************************************************************
- *                                    PRIVATE FUNCTIONS
+ *                            PRIVATE MISCELLANEOUS FUNCTIONS
  **************************************************************************************************/
 
+/**
+ *  @brief     Connect USB-PD pin to groung.
+ *  @details   This action detected by host system as reconnect USB device
+ */
 static void _manual_push_disconnect(void)
 {
     GPIO_InitTypeDef GPIO_InitStruct;
@@ -83,47 +87,9 @@ static void _manual_push_disconnect(void)
     HAL_GPIO_WritePin(GPIO_PORT(USBD_P_GPIO), GPIO_PIN(USBD_P_GPIO), GPIO_PIN_RESET);
 }
 
-
-
-// Перегрузка callback'ов
-// Called during USBD_Initialize to initialize the USB CDC class instance (ACM).
-void USBD_CDC0_ACM_Initialize (void)
-{
-    // Add code for initialization
-}
-
-// Called during USBD_Uninitialize to de-initialize the USB CDC class instance (ACM).
-void USBD_CDC0_ACM_Uninitialize (void)
-{
-    // Add code for de-initialization
-}
-
-// Called upon USB Bus Reset Event.
-void USBD_CDC0_ACM_Reset (void)
-{
-    // Add code for reset
-}
-
-// Callback function called upon reception of request send encapsulated command sent by the USB Host.
-// \param[in]   buf           buffer that contains send encapsulated command request.
-// \param[in]   len           length of send encapsulated command request.
-// \return      true          send encapsulated command request processed.
-// \return      false         send encapsulated command request not supported or not processed.
-bool USBD_CDC0_ACM_SendEncapsulatedCommand (const uint8_t *buf, uint16_t len)
-{
-    return true;
-}
-
-// Callback function called upon reception of request to get encapsulated response sent by the USB Host.
-// \param[in]   max_len       maximum number of data bytes that USB Host expects to receive
-// \param[out]  buf           pointer to buffer containing get encapsulated response to be returned to USB Host.
-// \param[out]  len           pointer to number of data bytes to be returned to USB Host.
-// \return      true          get encapsulated response request processed.
-// \return      false         get encapsulated response request not supported or not processed.
-bool USBD_CDC0_ACM_GetEncapsulatedResponse (uint16_t max_len, uint8_t **buf, uint16_t *len)
-{
-    return true;
-}
+/***************************************************************************************************
+ *                          PRIVATE FUNCTIONS CDC0
+ **************************************************************************************************/
 
 // Called upon USB Host request to change communication settings.
 // \param[in]   line_coding   pointer to CDC_LINE_CODING structure.
@@ -132,7 +98,7 @@ bool USBD_CDC0_ACM_GetEncapsulatedResponse (uint16_t max_len, uint8_t **buf, uin
 bool USBD_CDC0_ACM_SetLineCoding (const CDC_LINE_CODING *line_coding)
 {
     // Фиктивные настройки бодрейта необходимы для некоторых эмуляторов терминала
-    _cdc_acm_line_coding = *line_coding;
+    _cdc0_acm_line_coding = *line_coding;
 
     return true;
 }
@@ -144,7 +110,7 @@ bool USBD_CDC0_ACM_SetLineCoding (const CDC_LINE_CODING *line_coding)
 bool USBD_CDC0_ACM_GetLineCoding (CDC_LINE_CODING *line_coding)
 {
     // Фиктивные настройки бодрейта необходимы для некоторых эмуляторов терминала
-    *line_coding = _cdc_acm_line_coding;
+    *line_coding = _cdc0_acm_line_coding;
 
     return true;
 }
@@ -181,7 +147,7 @@ void USBD_CDC0_ACM_DataSent (void)
  *                                    PUBLIC FUNCTIONS
  **************************************************************************************************/
 
-bsp_result_t bsp_vcp_init()
+bsp_result_t bsp_cdc_init()
 {
     usbStatus _res;
 
@@ -196,7 +162,7 @@ bsp_result_t bsp_vcp_init()
     return _res == usbOK ? BSP_RESULT_OK : BSP_RESULT_ERR;
 }
 
-bsp_result_t bsp_vcp_deinit()
+bsp_result_t bsp_cdc_deinit()
 {
     usbStatus _res;
 
@@ -210,28 +176,28 @@ bsp_result_t bsp_vcp_deinit()
     return _res == usbOK ? BSP_RESULT_OK : BSP_RESULT_ERR;
 }
 
-bool bsp_vcp_is_configured()
+bool bsp_cdc_is_configured()
 {
     return USBD_Configured(USBD_CDC0_DEV);
 }
 
-int32_t bsp_vcp_read_data(uint8_t *buf, int32_t len)
+int32_t bsp_cdc0_read_data(uint8_t *buf, int32_t len)
 {
     return (USBD_CDC_ACM_DataAvailable(USBD_CDC_VCP)) ? 
             USBD_CDC_ACM_ReadData(USBD_CDC_VCP, buf, len) : 0;
 }
 
-int32_t bsp_vcp_write_data(const uint8_t *buf, int32_t len)
+int32_t bsp_cdc0_write_data(const uint8_t *buf, int32_t len)
 {
     return USBD_CDC_ACM_WriteData(USBD_CDC_VCP, buf, len);
 }
 
-int bsp_vcp_put_char(int ch)
+int bsp_cdc0_put_char(int ch)
 {
     return USBD_CDC_ACM_PutChar(USBD_CDC_VCP, ch);
 }
 
-int bsp_vcp_get_char(void)
+int bsp_cdc0_get_char(void)
 {
     return USBD_CDC_ACM_GetChar(USBD_CDC_VCP);
 }

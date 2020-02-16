@@ -30,7 +30,7 @@
 #include "cmsis_os2.h" // ARM::CMSIS:RTOS:Keil RTX
 #endif
 
-#include "bsp_vcp.h"
+#include "bsp_cdc.h"
 #include "rtx_os.h"
 
 /***************************************************************************************************
@@ -121,7 +121,7 @@ con_channel_t curr_con = CON_NA;
                 #if (USR_PUT_VCP != 0)
                     if ((curr_con == CON_NA) || (curr_con == CON_VCP))
                     {
-                        int tmp = bsp_vcp_put_char(ch);
+                        int tmp = bsp_cdc0_put_char(ch);
                         result = (tmp >= 0) ? tmp : result;
                     }
                 #endif
@@ -166,7 +166,7 @@ con_channel_t curr_con = CON_NA;
                 #if (USR_ERR_VCP != 0)
                     if ((curr_con == CON_NA) || (curr_con != CON_VCP))
                     {
-                        int tmp = bsp_vcp_put_char(ch);
+                        int tmp = bsp_cdc0_put_char(ch);
                         result = (tmp >= 0) ? tmp : result;
                     }
                 #endif
@@ -267,7 +267,7 @@ con_channel_t curr_con = CON_NA;
                     {
                         if (result < 0)
                         {
-                            result = bsp_vcp_get_char();
+                            result = bsp_cdc0_get_char();
                         }
                         
                         if (result >= 0)
