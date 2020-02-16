@@ -1982,7 +1982,7 @@ static int32_t USART_Initialize (      ARM_USART_SignalEvent_t  cb_event,
     Enable_GPIO_Clock (usart->io.cts->port);
   }
 
-#ifdef __USART_DMA
+#ifdef __USART_DMA_RX
   if (usart->dma_rx) {
     // Initialize USART RX DMA Resources
     memset((void *)usart->dma_rx->hdma, 0U, sizeof(DMA_HandleTypeDef));
@@ -2001,7 +2001,8 @@ static int32_t USART_Initialize (      ARM_USART_SignalEvent_t  cb_event,
     usart->dma_rx->hdma->XferM1CpltCallback   = NULL;
     usart->dma_rx->hdma->XferErrorCallback    = NULL;
   }
-
+#endif
+#ifdef __USART_DMA_TX
   if (usart->dma_tx) {
     // Initialize USART TX DMA Resources
     memset((void *)usart->dma_tx->hdma, 0U, sizeof(DMA_HandleTypeDef));
@@ -2113,7 +2114,7 @@ static int32_t USART_PowerControl (      ARM_POWER_STATE  state,
     case ARM_POWER_OFF:
 #ifdef RTE_DEVICE_FRAMEWORK_CLASSIC
       HAL_NVIC_DisableIRQ (usart->irq_num);
-#ifdef __USART_DMA
+#ifdef __USART_DMA_RX
       if (usart->dma_rx) {
         if (usart->dma_rx->hdma->Instance) {
           if (usart->info->status.rx_busy != 0) {
@@ -2128,7 +2129,8 @@ static int32_t USART_PowerControl (      ARM_POWER_STATE  state,
           HAL_DMA_DeInit (usart->dma_rx->hdma);
         }
       }
-
+#endif
+#ifdef __USART_DMA_TX
       if (usart->dma_tx) {
         if (usart->dma_tx->hdma->Instance) {
           if (usart->info->status.tx_busy != 0) {
@@ -2287,13 +2289,14 @@ static int32_t USART_PowerControl (      ARM_POWER_STATE  state,
       NVIC_ClearPendingIRQ(usart->irq_num);
       NVIC_EnableIRQ(usart->irq_num);
 
-#ifdef __USART_DMA
+#ifdef __USART_DMA_RX
       if (usart->dma_rx) {
         // Clear and Enable DMA IRQ in NVIC
         NVIC_ClearPendingIRQ(usart->dma_rx->irq_num);
         NVIC_EnableIRQ(usart->dma_rx->irq_num);
       }
-
+#endif
+#ifdef __USART_DMA_TX
       if (usart->dma_tx) {
         // Clear and Enable DMA IRQ in NVIC
         NVIC_ClearPendingIRQ(usart->dma_tx->irq_num);
@@ -4097,7 +4100,7 @@ static ARM_USART_STATUS        USART10_GetStatus       (void)                   
 static int32_t                 USART10_SetModemControl (ARM_USART_MODEM_CONTROL control)                     { return USART_SetModemControl (control, &USART10_Resources); }
 static ARM_USART_MODEM_STATUS  USART10_GetModemStatus  (void)                                                { return USART_GetModemStatus (&USART10_Resources); }
        void                    UART10_IRQHandler       (void)                                                {        USART_IRQHandler (&USART10_Resources); }
-#ifdef MX_UART8_TX_DMA_Instance
+#ifdef MX_UART10_TX_DMA_Instance
 static void                    UART10_TX_DMA_Complete (DMA_HandleTypeDef *hdma)                               {        USART_TX_DMA_Complete(&USART10_Resources); }
 
 #ifdef RTE_DEVICE_FRAMEWORK_CLASSIC

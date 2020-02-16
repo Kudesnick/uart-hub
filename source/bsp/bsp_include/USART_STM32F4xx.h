@@ -49,6 +49,11 @@
 #endif
 
 #ifdef RTE_DEVICE_FRAMEWORK_CLASSIC
+// Ignore error "USARTx using DMA requires Rx and Tx DMA channel enabled in RTE_Device.h or MX_Device.h!"
+#define DMA_RXTX_ERR_IGNORE
+#endif
+
+#ifdef RTE_DEVICE_FRAMEWORK_CLASSIC
   #if ((defined(RTE_Drivers_USART1) || \
         defined(RTE_Drivers_USART2) || \
         defined(RTE_Drivers_USART3) || \
@@ -1137,10 +1142,10 @@
 
 #ifdef MX_USART1
 #if (defined(MX_USART1_RX_DMA_Instance) || defined(MX_USART1_TX_DMA_Instance))
-#ifndef MX_USART1_RX_DMA_Instance
+#if !defined(DMA_RXTX_ERR_IGNORE) && !defined(MX_USART1_RX_DMA_Instance)
   #error "USART1 using DMA requires Rx and Tx DMA channel enabled in RTE_Device.h or MX_Device.h!"
 #endif
-#ifndef MX_USART1_TX_DMA_Instance
+#if !defined(DMA_RXTX_ERR_IGNORE) && !defined(MX_USART1_TX_DMA_Instance)
   #error "USART1 using DMA requires Rx and Tx DMA channel enabled in RTE_Device.h or MX_Device.h!"
 #endif
 #endif
@@ -1148,10 +1153,10 @@
 
 #ifdef MX_USART2
 #if (defined(MX_USART2_RX_DMA_Instance) || defined(MX_USART2_TX_DMA_Instance))
-#ifndef MX_USART2_RX_DMA_Instance
+#if !defined(DMA_RXTX_ERR_IGNORE) && !defined(MX_USART2_RX_DMA_Instance)
   #error "USART2 using DMA requires Rx and Tx DMA channel enabled in RTE_Device.h or MX_Device.h!"
 #endif
-#ifndef MX_USART2_TX_DMA_Instance
+#if !defined(DMA_RXTX_ERR_IGNORE) && !defined(MX_USART2_TX_DMA_Instance)
   #error "USART2 using DMA requires Rx and Tx DMA channel enabled in RTE_Device.h or MX_Device.h!"
 #endif
 #endif
@@ -1159,10 +1164,10 @@
 
 #ifdef MX_USART3
 #if (defined(MX_USART3_RX_DMA_Instance) || defined(MX_USART3_TX_DMA_Instance))
-#ifndef MX_USART3_RX_DMA_Instance
+#if !defined(DMA_RXTX_ERR_IGNORE) && !defined(MX_USART3_RX_DMA_Instance)
   #error "USART3 using DMA requires Rx and Tx DMA channel enabled in RTE_Device.h or MX_Device.h!"
 #endif
-#ifndef MX_USART3_TX_DMA_Instance
+#if !defined(DMA_RXTX_ERR_IGNORE) && !defined(MX_USART3_TX_DMA_Instance)
   #error "USART3 using DMA requires Rx and Tx DMA channel enabled in RTE_Device.h or MX_Device.h!"
 #endif
 #endif
@@ -1170,10 +1175,10 @@
 
 #ifdef MX_UART4
 #if (defined(MX_UART4_RX_DMA_Instance) || defined(MX_UART4_TX_DMA_Instance))
-#ifndef MX_UART4_RX_DMA_Instance
+#if !defined(DMA_RXTX_ERR_IGNORE) && !defined(MX_UART4_RX_DMA_Instance)
   #error "UART4 using DMA requires Rx and Tx DMA channel enabled in RTE_Device.h or MX_Device.h!"
 #endif
-#ifndef MX_UART4_TX_DMA_Instance
+#if !defined(DMA_RXTX_ERR_IGNORE) && !defined(MX_UART4_TX_DMA_Instance)
   #error "UART4 using DMA requires Rx and Tx DMA channel enabled in RTE_Device.h or MX_Device.h!"
 #endif
 #endif
@@ -1181,10 +1186,10 @@
 
 #ifdef MX_UART5
 #if (defined(MX_UART5_RX_DMA_Instance) || defined(MX_UART5_TX_DMA_Instance))
-#ifndef MX_UART5_RX_DMA_Instance
+#if !defined(DMA_RXTX_ERR_IGNORE) && !defined(MX_UART5_RX_DMA_Instance)
   #error "UART5 using DMA requires Rx and Tx DMA channel enabled in RTE_Device.h or MX_Device.h!"
 #endif
-#ifndef MX_UART5_TX_DMA_Instance
+#if !defined(DMA_RXTX_ERR_IGNORE) && !defined(MX_UART5_TX_DMA_Instance)
   #error "UART5 using DMA requires Rx and Tx DMA channel enabled in RTE_Device.h or MX_Device.h!"
 #endif
 #endif
@@ -1192,10 +1197,10 @@
 
 #ifdef MX_USART6
 #if (defined(MX_USART6_RX_DMA_Instance) || defined(MX_USART6_TX_DMA_Instance))
-#ifndef MX_USART6_RX_DMA_Instance
+#if !defined(DMA_RXTX_ERR_IGNORE) && !defined(MX_USART6_RX_DMA_Instance)
   #error "USART6 using DMA requires Rx and Tx DMA channel enabled in RTE_Device.h or MX_Device.h!"
 #endif
-#ifndef MX_USART6_TX_DMA_Instance
+#if !defined(DMA_RXTX_ERR_IGNORE) && !defined(MX_USART6_TX_DMA_Instance)
   #error "USART6 using DMA requires Rx and Tx DMA channel enabled in RTE_Device.h or MX_Device.h!"
 #endif
 #endif
@@ -1203,10 +1208,10 @@
 
 #ifdef MX_UART7
 #if (defined(MX_UART7_RX_DMA_Instance) || defined(MX_UART7_TX_DMA_Instance))
-#ifndef MX_UART7_RX_DMA_Instance
+#if !defined(DMA_RXTX_ERR_IGNORE) && !defined(MX_UART7_RX_DMA_Instance)
   #error "UART7 using DMA requires Rx and Tx DMA channel enabled in RTE_Device.h or MX_Device.h!"
 #endif
-#ifndef MX_UART7_TX_DMA_Instance
+#if !defined(DMA_RXTX_ERR_IGNORE) && !defined(MX_UART7_TX_DMA_Instance)
   #error "UART7 using DMA requires Rx and Tx DMA channel enabled in RTE_Device.h or MX_Device.h!"
 #endif
 #endif
@@ -1214,10 +1219,10 @@
 
 #ifdef MX_UART8
 #if (defined(MX_UART8_RX_DMA_Instance) || defined(MX_UART8_TX_DMA_Instance))
-#ifndef MX_UART8_RX_DMA_Instance
-  #error "UART using DMA requires Rx and Tx DMA channel enabled in RTE_Device.h or MX_Device.h!"
+#if !defined(DMA_RXTX_ERR_IGNORE) && !defined(MX_UART8_RX_DMA_Instance)
+  #error "UART8 using DMA requires Rx and Tx DMA channel enabled in RTE_Device.h or MX_Device.h!"
 #endif
-#ifndef MX_UART8_TX_DMA_Instance
+#if !defined(DMA_RXTX_ERR_IGNORE) && !defined(MX_UART8_TX_DMA_Instance)
   #error "UART8 using DMA requires Rx and Tx DMA channel enabled in RTE_Device.h or MX_Device.h!"
 #endif
 #endif
@@ -1225,10 +1230,10 @@
 
 #ifdef MX_UART9
 #if (defined(MX_UART9_RX_DMA_Instance) || defined(MX_UART9_TX_DMA_Instance))
-#ifndef MX_UART9_RX_DMA_Instance
-  #error "UART using DMA requires Rx and Tx DMA channel enabled in RTE_Device.h or MX_Device.h!"
+#if !defined(DMA_RXTX_ERR_IGNORE) && !defined(MX_UART9_RX_DMA_Instance)
+  #error "UART9 using DMA requires Rx and Tx DMA channel enabled in RTE_Device.h or MX_Device.h!"
 #endif
-#ifndef MX_UART9_TX_DMA_Instance
+#if !defined(DMA_RXTX_ERR_IGNORE) && !defined(MX_UART9_TX_DMA_Instance)
   #error "UART9 using DMA requires Rx and Tx DMA channel enabled in RTE_Device.h or MX_Device.h!"
 #endif
 #endif
@@ -1236,11 +1241,11 @@
 
 #ifdef MX_UART10
 #if (defined(MX_UART10_RX_DMA_Instance) || defined(MX_UART10_TX_DMA_Instance))
-#ifndef MX_UART10_RX_DMA_Instance
-  #error "UART using DMA requires Rx and Tx DMA channel enabled in RTE_Device.h or MX_Device.h!"
+#if !defined(DMA_RXTX_ERR_IGNORE) && !defined(MX_UART10_RX_DMA_Instance)
+  #error "UART10 using DMA requires Rx and Tx DMA channel enabled in RTE_Device.h or MX_Device.h!"
 #endif
-#ifndef MX_UART10_TX_DMA_Instance
-  #error "UART9 using DMA requires Rx and Tx DMA channel enabled in RTE_Device.h or MX_Device.h!"
+#if !defined(DMA_RXTX_ERR_IGNORE) && !defined(MX_UART10_TX_DMA_Instance)
+  #error "UART10 using DMA requires Rx and Tx DMA channel enabled in RTE_Device.h or MX_Device.h!"
 #endif
 #endif
 #endif
