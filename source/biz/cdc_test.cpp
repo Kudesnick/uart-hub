@@ -142,16 +142,17 @@ private:
             printf("<cdc> usart PowerControl error: %x08", usart_err);
         }
  
-        usart_err = Driver_USART1.Control(ARM_USART_MODE_ASYNCHRONOUS |
+        usart_err = Driver_USART1.Control(ARM_USART_MODE_SINGLE_WIRE |
                               ARM_USART_DATA_BITS_8       |
                               ARM_USART_PARITY_NONE       |
-                              ARM_USART_STOP_BITS_1       |
-                              ARM_USART_MODE_SINGLE_WIRE  |
-                              ARM_USART_FLOW_CONTROL_NONE, 9600);
+                              ARM_USART_STOP_BITS_1, 9600);
         if (usart_err != ARM_DRIVER_OK)
         {
             printf("<cdc> usart Control error: %x08", usart_err);
         }
+        
+        Driver_USART1.Control(ARM_USART_CONTROL_TX, 1);
+//      Driver_USART1.Control(ARM_USART_CONTROL_RX, 1);
 
         for (;;)
         {
