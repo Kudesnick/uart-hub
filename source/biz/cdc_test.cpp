@@ -74,9 +74,26 @@ extern ARM_DRIVER_USART Driver_USART10;
  *                                    PRIVATE FUNCTIONS
  **************************************************************************************************/
 
+/****** USART Event
+#define ARM_USART_EVENT_SEND_COMPLETE       0x0001 ///< Send completed; however USART may still transmit data
+#define ARM_USART_EVENT_RECEIVE_COMPLETE    0x0002 ///< Receive completed
+#define ARM_USART_EVENT_TRANSFER_COMPLETE   0x0004 ///< Transfer completed
+#define ARM_USART_EVENT_TX_COMPLETE         0x0008 ///< Transmit completed (optional)
+#define ARM_USART_EVENT_TX_UNDERFLOW        0x0010 ///< Transmit data not available (Synchronous Slave)
+#define ARM_USART_EVENT_RX_OVERFLOW         0x0020 ///< Receive data overflow
+#define ARM_USART_EVENT_RX_TIMEOUT          0x0040 ///< Receive character timeout (optional)
+#define ARM_USART_EVENT_RX_BREAK            0x0080 ///< Break detected on receive
+#define ARM_USART_EVENT_RX_FRAMING_ERROR    0x0100 ///< Framing error detected on receive
+#define ARM_USART_EVENT_RX_PARITY_ERROR     0x0200 ///< Parity error detected on receive
+#define ARM_USART_EVENT_CTS                 0x0400 ///< CTS state changed (optional)
+#define ARM_USART_EVENT_DSR                 0x0800 ///< DSR state changed (optional)
+#define ARM_USART_EVENT_DCD                 0x1000 ///< DCD state changed (optional)
+#define ARM_USART_EVENT_RI                  0x2000 ///< RI  state changed (optional)
+ *****/
+
 static void _usart_event(uint32_t _event)
 {
-    printf("<cdc> usart event %x08", _event);
+    printf("<cdc> usart event %04x\r\n", _event);
 }
 
 
