@@ -74,6 +74,8 @@ extern ARM_DRIVER_USART Driver_USART10;
  *                                    PRIVATE FUNCTIONS
  **************************************************************************************************/
 
+static cpp_os_event usart_event;
+
 /****** USART Event
 #define ARM_USART_EVENT_SEND_COMPLETE       0x0001 ///< Send completed; however USART may still transmit data
 #define ARM_USART_EVENT_RECEIVE_COMPLETE    0x0002 ///< Receive completed
@@ -94,6 +96,7 @@ extern ARM_DRIVER_USART Driver_USART10;
 static void _usart_event(uint32_t _event)
 {
     printf("<cdc> usart event %04x\r\n", _event);
+    usart_event.set(_event);
 }
 
 
@@ -177,7 +180,7 @@ private:
 
             memset(buf, 0, sizeof(buf));
 
-            while (gets(buf) != buf);
+            while (gets(buf) != buf){cpp_os::delay(200);};
 
             uint16_t len = strlen(buf);
 
@@ -192,6 +195,9 @@ private:
             printf("<cdc> echo: %s\r\n", buf);
             
             Driver_USART1.Send(buf, len);
+            
+            usart_event.wait(ARM_USART_EVENT_SEND_COMPLETE | ARM_USART_EVENT_TX_COMPLETE,
+                             flags_wait_all, 1000);
         }
     }
 
