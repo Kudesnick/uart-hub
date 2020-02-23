@@ -783,7 +783,7 @@
               <MiscControls></MiscControls>
               <Define>HSE_VALUE=16000000 HSE_ON STM32F413xx</Define>
               <Undefine></Undefine>
-              <IncludePath>..\source\cpp_os;..\source\bsp\bsp_include;..\source\main;..\source\misc;..\source\sett;..\source\rtt</IncludePath>
+              <IncludePath>..\source\bsp\bsp_include;..\source\main;..\source\misc;..\source\rtt;..\source\biz</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>

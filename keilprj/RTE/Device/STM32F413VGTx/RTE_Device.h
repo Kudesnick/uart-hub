@@ -48,7 +48,7 @@
 #define RTE_USART1                      1
 
 //   <o> USART1_TX Pin <0=>Not Used <1=>PA9 <2=>PA15 <3=>PB6
-#define RTE_USART1_TX_ID                2
+#define RTE_USART1_TX_ID                3
 #if    (RTE_USART1_TX_ID == 0)
 #define RTE_USART1_TX                   0
 #elif  (RTE_USART1_TX_ID == 1)
@@ -68,7 +68,7 @@
 #endif
 
 //   <o> USART1_RX Pin <0=>Not Used <1=>PA10 <2=>PB3 <3=>PB7
-#define RTE_USART1_RX_ID                0
+#define RTE_USART1_RX_ID                3
 #if    (RTE_USART1_RX_ID == 0)
 #define RTE_USART1_RX                   0
 #elif  (RTE_USART1_RX_ID == 1)
@@ -935,9 +935,9 @@
 //     <i>  Selects DMA Priority
 //   </e>
 #define RTE_UART9_TX_DMA                1
-#define RTE_UART9_TX_DMA_NUMBER         1
+#define RTE_UART9_TX_DMA_NUMBER         2
 #define RTE_UART9_TX_DMA_STREAM         0
-#define RTE_UART9_TX_DMA_CHANNEL        5
+#define RTE_UART9_TX_DMA_CHANNEL        1
 #define RTE_UART9_TX_DMA_PRIORITY       0
 
 // </e>
@@ -1005,9 +1005,9 @@
 //     <i>  Selects DMA Priority
 //   </e>
 #define RTE_UART10_TX_DMA               1
-#define RTE_UART10_TX_DMA_NUMBER        1
-#define RTE_UART10_TX_DMA_STREAM        0
-#define RTE_UART10_TX_DMA_CHANNEL       5
+#define RTE_UART10_TX_DMA_NUMBER        2
+#define RTE_UART10_TX_DMA_STREAM        3
+#define RTE_UART10_TX_DMA_CHANNEL       6
 #define RTE_UART10_TX_DMA_PRIORITY      0
 
 // </e>
