@@ -48,7 +48,7 @@
 #define RTE_USART1                      1
 
 //   <o> USART1_TX Pin <0=>Not Used <1=>PA9 <2=>PA15 <3=>PB6
-#define RTE_USART1_TX_ID                3
+#define RTE_USART1_TX_ID                2
 #if    (RTE_USART1_TX_ID == 0)
 #define RTE_USART1_TX                   0
 #elif  (RTE_USART1_TX_ID == 1)
