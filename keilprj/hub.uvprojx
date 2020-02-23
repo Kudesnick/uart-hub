@@ -383,9 +383,9 @@
           <GroupName>biz</GroupName>
           <Files>
             <File>
-              <FileName>cdc_test.cpp</FileName>
+              <FileName>cdc.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\source\biz\cdc_test.cpp</FilePath>
+              <FilePath>..\source\biz\cdc.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -403,14 +403,14 @@
               <FilePath>..\source\bsp\bsp_flash.c</FilePath>
             </File>
             <File>
-              <FileName>bsp_cdc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\source\bsp\bsp_cdc.c</FilePath>
-            </File>
-            <File>
               <FileName>USART_STM32F4xx.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\source\bsp\USART_STM32F4xx.c</FilePath>
+            </File>
+            <File>
+              <FileName>USBD_User_CDC_ACM_UART_0.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\source\bsp\USBD_User_CDC_ACM_UART_0.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -873,9 +873,9 @@
           <GroupName>biz</GroupName>
           <Files>
             <File>
-              <FileName>cdc_test.cpp</FileName>
+              <FileName>cdc.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\source\biz\cdc_test.cpp</FilePath>
+              <FilePath>..\source\biz\cdc.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -893,14 +893,14 @@
               <FilePath>..\source\bsp\bsp_flash.c</FilePath>
             </File>
             <File>
-              <FileName>bsp_cdc.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\source\bsp\bsp_cdc.c</FilePath>
-            </File>
-            <File>
               <FileName>USART_STM32F4xx.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\source\bsp\USART_STM32F4xx.c</FilePath>
+            </File>
+            <File>
+              <FileName>USBD_User_CDC_ACM_UART_0.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\source\bsp\USBD_User_CDC_ACM_UART_0.c</FilePath>
             </File>
           </Files>
         </Group>

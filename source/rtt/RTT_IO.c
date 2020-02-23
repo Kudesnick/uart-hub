@@ -30,7 +30,6 @@
     #include "cmsis_os2.h" // ARM::CMSIS:RTOS:Keil RTX
 #endif
 
-#include "bsp_cdc.h"
 #include "rtx_os.h"
 
 /***************************************************************************************************
@@ -40,13 +39,13 @@
 /// Консольный ввод/вывод
 #define USR_PUT_RTT 1 ///< Вывод консоли в RTT
 #define USR_PUT_ITM 1 ///< Вывод консоли в SWO
-#define USR_PUT_VCP 1 ///< Вывод консоли в VCP
+#define USR_PUT_VCP 0 ///< Вывод консоли в VCP
 #define USR_ERR_RTT 1 ///< Отладочный вывод в RTT
 #define USR_ERR_ITM 1 ///< Отладочный вывод в SWO
-#define USR_ERR_VCP 1 ///< Отладочный вывод в VCP
+#define USR_ERR_VCP 0 ///< Отладочный вывод в VCP
 #define USR_GET_RTT 1 ///< Консольный ввод из RTT
 #define USR_GET_ITM 1 ///< Консольный ввод из SWO
-#define USR_GET_VCP 1 ///< Консольный ввод из VCP
+#define USR_GET_VCP 0 ///< Консольный ввод из VCP
 
 #if (USR_PUT_ITM != 0) || (USR_GET_ITM != 0)
     /* ITM registers */
