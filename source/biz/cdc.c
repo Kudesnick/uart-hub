@@ -1,6 +1,6 @@
 /***************************************************************************************************
  *   Project:
- *   Author:        Stulov Tikhon
+ *   Author:
  ***************************************************************************************************
  *   Distribution:
  *
@@ -8,11 +8,11 @@
  *   MCU Family:    STM32F
  *   Compiler:      ARMCC
  ***************************************************************************************************
- *   File:          cpp_tmr.cpp
- *   Description:   неблокирующий механизм отсчета временных интервалов
+ *   File:          cdc_test.cpp
+ *   Description:
  *
  ***************************************************************************************************
- *   History:       17.12.2019 - file created
+ *   History:       16.02.2020 - file created
  *
  **************************************************************************************************/
 
@@ -20,8 +20,14 @@
  *                                      INCLUDED FILES
  **************************************************************************************************/
 
-#include "cpp_tmr.h"
-#include "cpp_os.h"
+#include <stdio.h>
+#include <string.h>
+
+#include "rl_usb.h" // Keil.MDK-Pro::USB:CORE
+
+#ifdef __cplusplus
+    using namespace std;
+#endif
 
 /***************************************************************************************************
  *                                       DEFINITIONS
@@ -55,35 +61,17 @@
  *                                    PRIVATE FUNCTIONS
  **************************************************************************************************/
 
+void cdc_thread(void *arg)
+{
+    (void)arg;
+    
+    USBD_Initialize(0U);         // USB Device 0 Initialization
+    USBD_Connect   (0U);         // USB Device 0 Connect
+};
+
 /***************************************************************************************************
  *                                    PUBLIC FUNCTIONS
  **************************************************************************************************/
-
-cpp_tmr::cpp_tmr(const uint32_t _delay):
-    delay(_delay)
-{
-    reset();
-};
-
-void cpp_tmr::reset(void)
-{
-    timestamp = cpp_os::get_tick_count();
-};
-
-void cpp_tmr::inc(void)
-{
-    timestamp += delay;
-};
-
-bool cpp_tmr::is_ovf(void)
-{
-    return ((cpp_os::get_tick_count() - timestamp) > delay);
-};
-
-void cpp_tmr::ovf_wait(void)
-{
-    cpp_os::delay_until(timestamp + delay);
-};
 
 /***************************************************************************************************
  *                                       END OF FILE

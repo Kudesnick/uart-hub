@@ -26,7 +26,6 @@
 #include <stdio.h>
 
 #include "bsp.h"
-#include "bsp_flash.h"
 
 #ifdef RTE_CMSIS_RTOS2
     // see https://www.keil.com/pack/doc/STM32Cube/General/html/cubemx__r_t_x.html

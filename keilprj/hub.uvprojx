@@ -338,7 +338,7 @@
               <MiscControls></MiscControls>
               <Define>HSE_VALUE=8000000 HSE_BYPASS STM32F413xx</Define>
               <Undefine></Undefine>
-              <IncludePath>..\source\cpp_os;..\source\bsp\bsp_include;..\source\main;..\source\misc;..\source\sett;..\source\rtt</IncludePath>
+              <IncludePath>..\source\bsp\bsp_include;..\source\main;..\source\misc;..\source\rtt;..\source\biz</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -360,7 +360,7 @@
             </VariousControls>
           </Aads>
           <LDads>
-            <umfTarg>0</umfTarg>
+            <umfTarg>1</umfTarg>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
             <noStLib>0</noStLib>
@@ -369,10 +369,10 @@
             <TextAddressRange>0x08000000</TextAddressRange>
             <DataAddressRange>0x20000000</DataAddressRange>
             <pXoBase></pXoBase>
-            <ScatterFile>..\source\main\scatter.sct</ScatterFile>
+            <ScatterFile></ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
-            <Misc>--predefine="-DSTM32F413xx"</Misc>
+            <Misc></Misc>
             <LinkerInputFile></LinkerInputFile>
             <DisabledWarnings></DisabledWarnings>
           </LDads>
@@ -383,9 +383,9 @@
           <GroupName>biz</GroupName>
           <Files>
             <File>
-              <FileName>cdc.cpp</FileName>
+              <FileName>cdc.c</FileName>
               <FileType>8</FileType>
-              <FilePath>..\source\biz\cdc.cpp</FilePath>
+              <FilePath>..\source\biz\cdc.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -396,11 +396,6 @@
               <FileName>bsp.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\source\bsp\bsp.c</FilePath>
-            </File>
-            <File>
-              <FileName>bsp_flash.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\source\bsp\bsp_flash.c</FilePath>
             </File>
             <File>
               <FileName>USART_STM32F4xx.c</FileName>
@@ -415,37 +410,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>cpp_os</GroupName>
-          <Files>
-            <File>
-              <FileName>cpp_list.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\source\cpp_os\cpp_list.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>cpp_os.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\source\cpp_os\cpp_os.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>cpp_tmr.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\source\cpp_os\cpp_tmr.cpp</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>main</GroupName>
           <Files>
             <File>
-              <FileName>main.cpp</FileName>
+              <FileName>main.c</FileName>
               <FileType>8</FileType>
-              <FilePath>..\source\main\main.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>microboot.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\source\main\microboot.c</FilePath>
+              <FilePath>..\source\main\main.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -461,21 +431,6 @@
               <FileName>SEGGER_RTT.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\source\rtt\SEGGER_RTT.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>sett</GroupName>
-          <Files>
-            <File>
-              <FileName>sett_def.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\source\sett\sett_def.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>sett_work.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\source\sett\sett_work.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -850,7 +805,7 @@
             </VariousControls>
           </Aads>
           <LDads>
-            <umfTarg>0</umfTarg>
+            <umfTarg>1</umfTarg>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
             <noStLib>0</noStLib>
@@ -859,10 +814,10 @@
             <TextAddressRange>0x08000000</TextAddressRange>
             <DataAddressRange>0x20000000</DataAddressRange>
             <pXoBase></pXoBase>
-            <ScatterFile>..\source\main\scatter.sct</ScatterFile>
+            <ScatterFile></ScatterFile>
             <IncludeLibs></IncludeLibs>
             <IncludeLibsPath></IncludeLibsPath>
-            <Misc>--predefine="-DSTM32F413xx"</Misc>
+            <Misc></Misc>
             <LinkerInputFile></LinkerInputFile>
             <DisabledWarnings></DisabledWarnings>
           </LDads>
@@ -873,9 +828,9 @@
           <GroupName>biz</GroupName>
           <Files>
             <File>
-              <FileName>cdc.cpp</FileName>
+              <FileName>cdc.c</FileName>
               <FileType>8</FileType>
-              <FilePath>..\source\biz\cdc.cpp</FilePath>
+              <FilePath>..\source\biz\cdc.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -886,11 +841,6 @@
               <FileName>bsp.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\source\bsp\bsp.c</FilePath>
-            </File>
-            <File>
-              <FileName>bsp_flash.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\source\bsp\bsp_flash.c</FilePath>
             </File>
             <File>
               <FileName>USART_STM32F4xx.c</FileName>
@@ -905,37 +855,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>cpp_os</GroupName>
-          <Files>
-            <File>
-              <FileName>cpp_list.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\source\cpp_os\cpp_list.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>cpp_os.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\source\cpp_os\cpp_os.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>cpp_tmr.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\source\cpp_os\cpp_tmr.cpp</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>main</GroupName>
           <Files>
             <File>
-              <FileName>main.cpp</FileName>
+              <FileName>main.c</FileName>
               <FileType>8</FileType>
-              <FilePath>..\source\main\main.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>microboot.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\source\main\microboot.c</FilePath>
+              <FilePath>..\source\main\main.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -951,21 +876,6 @@
               <FileName>SEGGER_RTT.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\source\rtt\SEGGER_RTT.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>sett</GroupName>
-          <Files>
-            <File>
-              <FileName>sett_def.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\source\sett\sett_def.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>sett_work.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\source\sett\sett_work.cpp</FilePath>
             </File>
           </Files>
         </Group>

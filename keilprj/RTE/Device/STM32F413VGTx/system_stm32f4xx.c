@@ -106,9 +106,8 @@
 /*!< Uncomment the following line if you need to relocate your vector Table in
      Internal SRAM. */
 /* #define VECT_TAB_SRAM */
-extern unsigned int Image$$ER_IROM1$$Base;
-#define VECT_TAB_OFFSET ((uint32_t)&Image$$ER_IROM1$$Base) /*!< Vector Table base offset field.
-                                   This value must be a multiple of 0x200. */
+#define VECT_TAB_OFFSET 0 /*!< Vector Table base offset field.
+                                                          This value must be a multiple of 0x200. */
 /******************************************************************************/
 
 /**
