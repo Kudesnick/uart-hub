@@ -1,8 +1,8 @@
 /***************************************************************************************************
- *   Project:     
+ *   Project:
  *   Author:       Stulov Tikhon
  ***************************************************************************************************
- *   Distribution:  
+ *   Distribution:
  *
  ***************************************************************************************************
  *   MCU Family:    STM32Fx
@@ -164,25 +164,25 @@
 
 #define GPIO_EXTI_LINE(GPIO) GPIO_PIN(GPIO)
 
-#define GPIO_IRQ_CHANNEL(GPIO)   \
-(                                                     \
-    (GPIO_PIN_SOURCE(GPIO) == 0x0) ? EXTI0_IRQn     : \
-    (GPIO_PIN_SOURCE(GPIO) == 0x1) ? EXTI1_IRQn     : \
-    (GPIO_PIN_SOURCE(GPIO) == 0x2) ? EXTI2_IRQn     : \
-    (GPIO_PIN_SOURCE(GPIO) == 0x3) ? EXTI3_IRQn     : \
-    (GPIO_PIN_SOURCE(GPIO) == 0x4) ? EXTI4_IRQn     : \
-    (GPIO_PIN_SOURCE(GPIO) == 0x5) ? EXTI9_5_IRQn   : \
-    (GPIO_PIN_SOURCE(GPIO) == 0x6) ? EXTI9_5_IRQn   : \
-    (GPIO_PIN_SOURCE(GPIO) == 0x7) ? EXTI9_5_IRQn   : \
-    (GPIO_PIN_SOURCE(GPIO) == 0x8) ? EXTI9_5_IRQn   : \
-    (GPIO_PIN_SOURCE(GPIO) == 0x9) ? EXTI9_5_IRQn   : \
-    (GPIO_PIN_SOURCE(GPIO) == 0xA) ? EXTI15_10_IRQn : \
-    (GPIO_PIN_SOURCE(GPIO) == 0xB) ? EXTI15_10_IRQn : \
-    (GPIO_PIN_SOURCE(GPIO) == 0xC) ? EXTI15_10_IRQn : \
-    (GPIO_PIN_SOURCE(GPIO) == 0xD) ? EXTI15_10_IRQn : \
-    (GPIO_PIN_SOURCE(GPIO) == 0xE) ? EXTI15_10_IRQn : \
-                                     EXTI15_10_IRQn   \
-)
+#define GPIO_IRQ_CHANNEL(GPIO)                                \
+    (                                                         \
+            (GPIO_PIN_SOURCE(GPIO) == 0x0) ? EXTI0_IRQn     : \
+            (GPIO_PIN_SOURCE(GPIO) == 0x1) ? EXTI1_IRQn     : \
+            (GPIO_PIN_SOURCE(GPIO) == 0x2) ? EXTI2_IRQn     : \
+            (GPIO_PIN_SOURCE(GPIO) == 0x3) ? EXTI3_IRQn     : \
+            (GPIO_PIN_SOURCE(GPIO) == 0x4) ? EXTI4_IRQn     : \
+            (GPIO_PIN_SOURCE(GPIO) == 0x5) ? EXTI9_5_IRQn   : \
+            (GPIO_PIN_SOURCE(GPIO) == 0x6) ? EXTI9_5_IRQn   : \
+            (GPIO_PIN_SOURCE(GPIO) == 0x7) ? EXTI9_5_IRQn   : \
+            (GPIO_PIN_SOURCE(GPIO) == 0x8) ? EXTI9_5_IRQn   : \
+            (GPIO_PIN_SOURCE(GPIO) == 0x9) ? EXTI9_5_IRQn   : \
+            (GPIO_PIN_SOURCE(GPIO) == 0xA) ? EXTI15_10_IRQn : \
+            (GPIO_PIN_SOURCE(GPIO) == 0xB) ? EXTI15_10_IRQn : \
+            (GPIO_PIN_SOURCE(GPIO) == 0xC) ? EXTI15_10_IRQn : \
+            (GPIO_PIN_SOURCE(GPIO) == 0xD) ? EXTI15_10_IRQn : \
+            (GPIO_PIN_SOURCE(GPIO) == 0xE) ? EXTI15_10_IRQn : \
+            EXTI15_10_IRQn                                    \
+    )
 
 #define Bit_INACTIVE(Bit_ACTIVE) ((Bit_ACTIVE == Bit_SET) ? Bit_RESET : Bit_SET)
 
