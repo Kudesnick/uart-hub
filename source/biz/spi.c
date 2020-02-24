@@ -85,7 +85,7 @@ void spi_callback(uint32_t event)
     {
     case ARM_SPI_EVENT_TRANSFER_COMPLETE:
         /* Success */
-        printf("<spi> %d, %d, %d, %d, %d, %d, %d, %d",
+        printf("<spi> 0x%02X, 0x%02X, 0x%02X, 0x%02X, 0x%02X, 0x%02X, 0x%02X, 0x%02X\r\n",
                testdata_in[0],
                testdata_in[1],
                testdata_in[2],
@@ -108,19 +108,42 @@ void spi_callback(uint32_t event)
 void spi_thread(void* arg)
 {
     (void)arg;
+    
+    spi_evt = osEventFlagsNew(NULL);
 
     ARM_DRIVER_SPI* SPIdrv = &Driver_SPI1;
 
+    uint32_t result = ARM_DRIVER_OK;
+    
     /* Initialize the SPI driver */
-    SPIdrv->Initialize(spi_callback);
+    result = SPIdrv->Initialize(spi_callback);
+    if (result != ARM_DRIVER_OK)
+    {
+        printf("<spi> Error Initialize\r\n");
+        osThreadExit();
+    }
     /* Power up the SPI peripheral */
-    SPIdrv->PowerControl(ARM_POWER_FULL);
+    result = SPIdrv->PowerControl(ARM_POWER_FULL);
+    if (result != ARM_DRIVER_OK)
+    {
+        printf("<spi> Error PowerControl\r\n");
+        osThreadExit();
+    }
     /* Configure the SPI to Slave, 8-bit mode */
-    SPIdrv->Control(ARM_SPI_MODE_SLAVE  |
+    result = SPIdrv->Control(ARM_SPI_MODE_SLAVE  |
+                    ARM_SPI_CPOL0_CPHA0 |
                     ARM_SPI_MSB_LSB     |
                     ARM_SPI_SS_SLAVE_HW |
-                    ARM_SPI_DATA_BITS(8), 0);
- 
+                    ARM_SPI_DATA_BITS(8), 1000000);
+    if (result != ARM_DRIVER_OK)
+    {
+        printf("<spi> Error Control\r\n");
+        osThreadExit();
+    }
+    else
+    {
+        printf("<spi> ARM_DRIVER_OK\r\n");
+    }
     /* thread loop */
     for (;;)
     {
