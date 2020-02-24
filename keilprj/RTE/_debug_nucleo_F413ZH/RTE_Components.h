@@ -40,6 +40,13 @@
 /*  Keil.MDK-Plus::USB:Device:CDC:6.13.7 */
 #define RTE_USB_Device_CDC_0            /* USB Device CDC instance 0 */
 
+/*  Keil::CMSIS Driver:SPI:2.12 */
+#define RTE_Drivers_SPI1                /* Driver SPI1 */
+        #define RTE_Drivers_SPI2                /* Driver SPI2 */
+        #define RTE_Drivers_SPI3                /* Driver SPI3 */
+        #define RTE_Drivers_SPI4                /* Driver SPI4 */
+        #define RTE_Drivers_SPI5                /* Driver SPI5 */
+        #define RTE_Drivers_SPI6                /* Driver SPI6 */
 /*  Keil::CMSIS Driver:USB Device:Full-speed:2.21 */
 #define RTE_Drivers_USBD0               /* Driver USBD0 */
 /*  Keil::Device:STM32Cube Framework:Classic:1.7.6 */
@@ -64,6 +71,8 @@
 #define RTE_DEVICE_HAL_RCC
 /*  Keil::Device:STM32Cube HAL:RTC:1.7.6 */
 #define RTE_DEVICE_HAL_RTC
+/*  Keil::Device:STM32Cube HAL:SPI:1.7.6 */
+#define RTE_DEVICE_HAL_SPI
 /*  Keil::Device:STM32Cube HAL:USART:1.7.6 */
 #define RTE_DEVICE_HAL_USART
 /*  Keil::Device:Startup:2.6.3 */

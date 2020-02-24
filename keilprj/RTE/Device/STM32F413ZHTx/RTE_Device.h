@@ -1296,7 +1296,7 @@
 //   </e>
 #define RTE_SPI1_RX_DMA                 1
 #define RTE_SPI1_RX_DMA_NUMBER          2
-#define RTE_SPI1_RX_DMA_STREAM          0
+#define RTE_SPI1_RX_DMA_STREAM          2
 #define RTE_SPI1_RX_DMA_CHANNEL         3
 #define RTE_SPI1_RX_DMA_PRIORITY        0
 
