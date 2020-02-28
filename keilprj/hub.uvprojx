@@ -425,6 +425,16 @@
           </Files>
         </Group>
         <Group>
+          <GroupName>misc</GroupName>
+          <Files>
+            <File>
+              <FileName>os_chk.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\source\misc\os_chk.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>rtt</GroupName>
           <Files>
             <File>
@@ -871,6 +881,16 @@
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\source\main\main.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>misc</GroupName>
+          <Files>
+            <File>
+              <FileName>os_chk.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\source\misc\os_chk.c</FilePath>
             </File>
           </Files>
         </Group>
