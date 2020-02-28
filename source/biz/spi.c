@@ -1,6 +1,6 @@
 /***************************************************************************************************
  *   Project:
- *   Author:        Stulov Tikhon (kudesnick@inbox.ru)
+ *   Author:
  ***************************************************************************************************
  *   Distribution:
  *
@@ -8,11 +8,11 @@
  *   MCU Family:    STM32F
  *   Compiler:      ARMCC
  ***************************************************************************************************
- *   File:          main.c
+ *   File:          spi.c
  *   Description:
  *
  ***************************************************************************************************
- *   History:       13.04.2019 - file created
+ *   History:       24.02.2020 - file created
  *
  **************************************************************************************************/
 
@@ -21,19 +21,19 @@
  **************************************************************************************************/
 
 #include <stdio.h>
-#include <stdbool.h>
+#include <string.h>
 
+#include "cmsis_compiler.h"
 #include "rtx_os.h"
+#include "Driver_SPI.h"
 
-#include "misc_macro.h"
 #include "os_chk.h"
-#include "bsp.h"
-#include "cdc.h"
-#include "spi.h"
 
 /***************************************************************************************************
  *                                       DEFINITIONS
  **************************************************************************************************/
+
+#define QUEUE_CNT 16
 
 /***************************************************************************************************
  *                                      PRIVATE TYPES
@@ -47,6 +47,11 @@
  *                                       PRIVATE DATA
  **************************************************************************************************/
 
+osEventFlagsId_t   spi_evt;
+osMessageQueueId_t spi_msg_q;
+
+uint16_t data_in,  data_out;
+
 /***************************************************************************************************
  *                                       PUBLIC DATA
  **************************************************************************************************/
@@ -54,6 +59,9 @@
 /***************************************************************************************************
  *                                      EXTERNAL DATA
  **************************************************************************************************/
+
+/* SPI Driver */
+extern ARM_DRIVER_SPI Driver_SPI1;
 
 /***************************************************************************************************
  *                              EXTERNAL FUNCTION PROTOTYPES
@@ -63,68 +71,96 @@
  *                                    PRIVATE FUNCTIONS
  **************************************************************************************************/
 
-static void create_os(const bool _printinfo)
+__WEAK void spi_get_data(uint16_t _data)
 {
-    if (_printinfo)
+    printf("<spi> get data 0x%04X.\r\n", _data);
+}
+
+void spi_callback(uint32_t event)
+{   
+    
+    switch (event)
     {
-        osVersion_t vers;
-
-        os_chck(osKernelGetInfo(&vers, NULL, 0));
-
-        fprintf(stderr, "<cpp_os> Operation system info:\r\n"
-                "  API version: %d.%d.%d\r\n"
-                "  kernel version: %d.%d.%d\r\n"
-                "  kernel id: " osRtxKernelId "\r\n",
-                vers.api    / 10000000, (vers.api    % 10000000) / 10000, vers.api    % 10000,
-                vers.kernel / 10000000, (vers.kernel % 10000000) / 10000, vers.kernel % 10000);
-
-#ifdef __ARMCC_VERSION
-        fprintf(stderr, "<cpp_os> Compiller version: %d.%d.%d\r\n",
-                __ARMCC_VERSION / 1000000,
-                (__ARMCC_VERSION % 1000000) / 10000,
-                __ARMCC_VERSION % 10000);
-#endif
-        fprintf(stderr, "<cpp_os> compilation date and time: " __DATE__ " [" __TIME__ "]\r\n");
-
+    case ARM_SPI_EVENT_TRANSFER_COMPLETE:
+        spi_get_data(data_in);
+        break;
     }
 
-    os_chck(osKernelInitialize()); // initialize RTX
-
-    os_chck_ptr(osThreadNew(cdc_thread, NULL, NULL));
-    os_chck_ptr(osThreadNew(spi_thread, NULL, NULL));
-
-    os_chck(osKernelStart()); // start RTX kernel
-};
+    osEventFlagsSet(spi_evt, event);
+}
 
 /***************************************************************************************************
  *                                    PUBLIC FUNCTIONS
  **************************************************************************************************/
 
-#if !defined(__CC_ARM) && defined(__ARMCC_VERSION) && !defined(__OPTIMIZE__)
-    /*
-    Without this directive, it does not start if -o0 optimization is used and the "main"
-    function without parameters.
-    see http://www.keil.com/support/man/docs/armclang_mig/armclang_mig_udb1499267612612.htm
-    */
-    __asm(".global __ARM_use_no_argv\n\t" "__ARM_use_no_argv:\n\t");
-#endif
-
-int main(void)
+void spi_thread(void* arg)
 {
-    fprintf(stderr, "\033[31mC\033[32mO\033[33mL\033[34mO\033[35mR\033[42m \033[0m"
-            "\033[36mT\033[37mE\033[30m\033[47mS\033[0mT\r\n"); // Color test
-    fprintf(stderr, "Runing main function..\r\n");
+    (void)arg;
+    
+    spi_evt   = os_chck_ptr(osEventFlagsNew(NULL));
+    spi_msg_q = os_chck_ptr(osMessageQueueNew(QUEUE_CNT, sizeof(uint16_t), NULL));
 
-    fprintf(stderr, "BSP init..\r\n");
-    bsp_init();
+    ARM_DRIVER_SPI* SPIdrv = &Driver_SPI1;
 
-    fprintf(stderr, "Starting OS..\r\n");
+    uint32_t result = ARM_DRIVER_OK;
+    
+    /* Initialize the SPI driver */
+    result = SPIdrv->Initialize(spi_callback);
+    if (result != ARM_DRIVER_OK)
+    {
+        printf("<spi> Error Initialize\r\n");
+        osThreadExit();
+    }
+    
+    /* Power up the SPI peripheral */
+    result = SPIdrv->PowerControl(ARM_POWER_FULL);
+    if (result != ARM_DRIVER_OK)
+    {
+        printf("<spi> Error PowerControl\r\n");
+        osThreadExit();
+    }
+    
+    /* Configure the SPI to Slave, 8-bit mode */
+    result = SPIdrv->Control(ARM_SPI_MODE_SLAVE  |
+                    ARM_SPI_CPOL0_CPHA0 |
+                    ARM_SPI_MSB_LSB     |
+                    ARM_SPI_SS_SLAVE_HW |
+                    ARM_SPI_DATA_BITS(16), 1000000);
+    if (result != ARM_DRIVER_OK)
+    {
+        printf("<spi> Error Control\r\n");
+        osThreadExit();
+    }
+    else
+    {
+        printf("<spi> ARM_DRIVER_OK\r\n");
+    }
+    
+    /* thread loop */
+    for (;;)
+    {
+        uint16_t data;
+        
+        if (osMessageQueuePut(spi_msg_q, &data, NULL, 0) != osOK)
+        {
+            data = 0;
+        }
+        
+        SPIdrv->Transfer(&data, &data_in, 1);
+        osEventFlagsWait(spi_evt, ARM_SPI_EVENT_TRANSFER_COMPLETE, osFlagsWaitAny, osWaitForever);
+    };
+}
 
-    create_os(true);
-
-    BRK_PTR("Main function terminated.");
-
-    return 0;
+bool spi_set_data(uint16_t _data)
+{
+    if (osMessageQueuePut(spi_msg_q, &_data, 0, 0) != osOK)
+    {
+        printf("<spi> msg put error.\r\n");
+        
+        return false;
+    }
+    
+    return true;
 }
 
 /***************************************************************************************************
