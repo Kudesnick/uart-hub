@@ -392,6 +392,11 @@
               <FileType>1</FileType>
               <FilePath>..\source\biz\spi.c</FilePath>
             </File>
+            <File>
+              <FileName>uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\source\biz\uart.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -851,6 +856,11 @@
               <FileName>spi.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\source\biz\spi.c</FilePath>
+            </File>
+            <File>
+              <FileName>uart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\source\biz\uart.c</FilePath>
             </File>
           </Files>
         </Group>
