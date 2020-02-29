@@ -37,10 +37,10 @@
 #if !defined(UART_PORT) && (RTE_USART3 == 1) && (RTE_USART3_TX_ID != 0) &&  (RTE_USART3_RX_ID != 0)
     #define UART_PORT 3
 #endif
-#if !defined(UART_PORT) && (RTE_USART4 == 1) && (RTE_USART4_TX_ID != 0) &&  (RTE_USART4_RX_ID != 0)
+#if !defined(UART_PORT) && (RTE_UART4  == 1) && (RTE_UART4_TX_ID  != 0) &&  (RTE_UART4_RX_ID  != 0)
     #define UART_PORT 4
 #endif
-#if !defined(UART_PORT) && (RTE_USART5 == 1) && (RTE_USART5_TX_ID != 0) &&  (RTE_USART5_RX_ID != 0)
+#if !defined(UART_PORT) && (RTE_UART5  == 1) && (RTE_UART5_TX_ID  != 0) &&  (RTE_UART5_RX_ID  != 0)
     #define UART_PORT 5
 #endif
 #if !defined(UART_PORT) && (RTE_USART6 == 1) && (RTE_USART6_TX_ID != 0) &&  (RTE_USART6_RX_ID != 0)
