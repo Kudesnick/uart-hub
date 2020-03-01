@@ -36,7 +36,8 @@ spi.max_speed_hz = 16000000 # 63 MHz - MOSI limit, 16 MHz - MISO limit
 spi.mode = 0b00 # CPOL0|CPHA0
 
 for i in range(0, 10):
-    val = send(ch[i], 0x10 + i)
+    data = [(j << 4) + i for j in range(0, 16)]
+    val = send(ch[i], data)
     print "Result: ", str(val)
 
 spi.close()
