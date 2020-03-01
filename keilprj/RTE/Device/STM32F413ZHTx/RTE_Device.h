@@ -997,7 +997,7 @@
 //   <e> DMA Tx
 //     <o1> Number <2=>2
 //     <i>  Selects DMA Number (only DMA1 can be used)
-//     <o2> Stream <7=>7 <3=>5
+//     <o2> Stream <7=>7 <5=>5
 //     <i>  Selects DMA Stream (only Stream 7 or 5 can be used)
 //     <o3> Channel <6=>6 <9=>9
 //     <i>  Selects DMA Channel (only Channel 6 or 9 can be used)
@@ -1006,7 +1006,7 @@
 //   </e>
 #define RTE_UART10_TX_DMA               1
 #define RTE_UART10_TX_DMA_NUMBER        2
-#define RTE_UART10_TX_DMA_STREAM        3
+#define RTE_UART10_TX_DMA_STREAM        5
 #define RTE_UART10_TX_DMA_CHANNEL       9
 #define RTE_UART10_TX_DMA_PRIORITY      0
 
