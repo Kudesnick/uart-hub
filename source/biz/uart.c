@@ -23,10 +23,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#ifdef __cplusplus
-    using namespace std;
-#endif
-
+#include "cmsis_compiler.h"
 #include "RTE_Device.h"
 #include "rtx_os.h"
 #include "Driver_USART.h"
@@ -37,9 +34,9 @@
  *                                       DEFINITIONS
  **************************************************************************************************/
 
-#define QUEUE_CNT 128
-#define BUF_CNT   16
-#define TOUT_ERR  1000
+#define QUEUE_CNT   128
+#define TX_BUF_CNT   16
+#define TOUT_ERR   1000
 
 /***************************************************************************************************
  *                                      PRIVATE TYPES
@@ -160,6 +157,7 @@ struct
     ARM_DRIVER_USART              *drv;
     const ARM_USART_SignalEvent_t  evt;
     uint8_t rx_buf;
+    uint8_t tx_buf[TX_BUF_CNT];
 } uart[UART_CNT] =
 {
 #if (UART_CNT >= 1)
@@ -246,6 +244,11 @@ osThreadId_t       uart_thr_id;
  *                                    PRIVATE FUNCTIONS
  **************************************************************************************************/
 
+__INLINE static uint32_t _data_to_mask(const uint32_t _data)
+{
+    return (_data >> 8) & mask_valid;
+}
+
 bool spi_get_data(spi_msg_t _data)
 {
     return (osMessageQueuePut(uart_msg_q, &_data, 0, 0) == osOK);
@@ -330,11 +333,56 @@ void uart_thread(void *arg)
             || osMessageQueueGet(uart_msg_q, &data, NULL, osWaitForever) == osOK
            )
         {
-            const uint32_t mask = (data >> 8) & mask_valid;
+            const uint32_t mask = _data_to_mask(data);
             
             if (osThreadFlagsWait(mask, osFlagsWaitAll, TOUT_ERR) == mask)
             {
-                // TO_DO sending data
+                uint8_t start_iface = 0;
+                uint8_t data_cnt = 0;
+                
+                for (uint8_t i = start_iface; i < UART_CNT; i++)
+                {
+                    if (i == start_iface)
+                    {
+                        if (mask & (1U << i))
+                        {
+                            for(uint8_t data_cnt = 0; data_cnt < TX_BUF_CNT; data_cnt++)
+                            {
+                                // Sending firs buffer
+                                uart[i].tx_buf[data_cnt] = data;
+                                
+                                if (osMessageQueueGet(uart_msg_q, &data, NULL, 0) == osOK)
+                                {
+                                    if (_data_to_mask(data) != mask)
+                                    {
+                                        break;
+                                    }
+                                }
+                                else
+                                {
+                                    data = 0;
+                                    break;
+                                }
+                            }
+                            
+                            uart[i].drv->Send(uart[i].tx_buf, data_cnt);
+                        }
+                        else
+                        {
+                            start_iface++;
+                        }
+                    }
+                    else
+                    {
+                        if (mask & (1U << i))
+                        {
+                            // Sending other buffers
+                            memcpy(uart[i].tx_buf, uart[start_iface].tx_buf, data_cnt);
+                            
+                            uart[i].drv->Send(uart[i].tx_buf, data_cnt);
+                        }
+                    }
+                }
             }
             else
             {
