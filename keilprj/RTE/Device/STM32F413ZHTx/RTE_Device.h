@@ -584,7 +584,7 @@
 #define RTE_UART5_TX_DMA                1
 #define RTE_UART5_TX_DMA_NUMBER         1
 #define RTE_UART5_TX_DMA_STREAM         7
-#define RTE_UART5_TX_DMA_CHANNEL        4
+#define RTE_UART5_TX_DMA_CHANNEL        8
 #define RTE_UART5_TX_DMA_PRIORITY       0
 
 // </e>
@@ -989,8 +989,8 @@
 //     <i>  Selects DMA Priority
 //   </e>
 #define RTE_UART10_RX_DMA               0
-#define RTE_UART10_RX_DMA_NUMBER        1
-#define RTE_UART10_RX_DMA_STREAM        6
+#define RTE_UART10_RX_DMA_NUMBER        2
+#define RTE_UART10_RX_DMA_STREAM        3
 #define RTE_UART10_RX_DMA_CHANNEL       5
 #define RTE_UART10_RX_DMA_PRIORITY      0
 
@@ -1015,7 +1015,7 @@
 
 // <e> I2C1 (Inter-integrated Circuit Interface 1) [Driver_I2C1]
 // <i> Configuration settings for Driver_I2C1 in component ::CMSIS Driver:I2C
-#define RTE_I2C1                        1
+#define RTE_I2C1                        0
 
 //   <o> I2C1_SCL Pin <0=>PB6 <1=>PB8
 #define RTE_I2C1_SCL_PORT_ID            1
@@ -1053,7 +1053,7 @@
 //   </e>
 #define RTE_I2C1_RX_DMA                 1
 #define RTE_I2C1_RX_DMA_NUMBER          1
-#define RTE_I2C1_RX_DMA_STREAM          0
+#define RTE_I2C1_RX_DMA_STREAM          5
 #define RTE_I2C1_RX_DMA_CHANNEL         1
 #define RTE_I2C1_RX_DMA_PRIORITY        0
 
@@ -1312,7 +1312,7 @@
 //   </e>
 #define RTE_SPI1_TX_DMA                 1
 #define RTE_SPI1_TX_DMA_NUMBER          2
-#define RTE_SPI1_TX_DMA_STREAM          5
+#define RTE_SPI1_TX_DMA_STREAM          3
 #define RTE_SPI1_TX_DMA_CHANNEL         3
 #define RTE_SPI1_TX_DMA_PRIORITY        0
 
