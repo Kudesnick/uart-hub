@@ -28,12 +28,13 @@
 #include "Driver_SPI.h"
 
 #include "os_chk.h"
+#include "spi.h"
 
 /***************************************************************************************************
  *                                       DEFINITIONS
  **************************************************************************************************/
 
-#define QUEUE_CNT 16
+#define QUEUE_CNT 128
 
 /***************************************************************************************************
  *                                      PRIVATE TYPES
@@ -50,7 +51,7 @@
 osEventFlagsId_t   spi_evt;
 osMessageQueueId_t spi_msg_q;
 
-uint16_t data_in,  data_out;
+spi_msg_t data_in, data_out;
 
 /***************************************************************************************************
  *                                       PUBLIC DATA
@@ -71,9 +72,11 @@ extern ARM_DRIVER_SPI Driver_SPI1;
  *                                    PRIVATE FUNCTIONS
  **************************************************************************************************/
 
-__WEAK void spi_get_data(uint16_t _data)
+__WEAK bool spi_get_data(spi_msg_t _data)
 {
-    printf("<spi> get data 0x%04X.\r\n", _data);
+    printf("<spi> get data 0x%08X.\r\n", _data);
+    
+    return true;
 }
 
 void spi_callback(uint32_t event)
@@ -98,7 +101,7 @@ void spi_thread(void* arg)
     (void)arg;
     
     spi_evt   = os_chck_ptr(osEventFlagsNew(NULL));
-    spi_msg_q = os_chck_ptr(osMessageQueueNew(QUEUE_CNT, sizeof(uint16_t), NULL));
+    spi_msg_q = os_chck_ptr(osMessageQueueNew(QUEUE_CNT, sizeof(spi_msg_t), NULL));
 
     ARM_DRIVER_SPI* SPIdrv = &Driver_SPI1;
 
@@ -125,7 +128,7 @@ void spi_thread(void* arg)
                     ARM_SPI_CPOL0_CPHA0 |
                     ARM_SPI_MSB_LSB     |
                     ARM_SPI_SS_SLAVE_HW |
-                    ARM_SPI_DATA_BITS(16), 1000000);
+                    ARM_SPI_DATA_BITS(8), 1000000);
     if (result != ARM_DRIVER_OK)
     {
         printf("<spi> Error Control\r\n");
@@ -139,19 +142,19 @@ void spi_thread(void* arg)
     /* thread loop */
     for (;;)
     {
-        uint16_t data;
+        spi_msg_t data;
         
         if (osMessageQueuePut(spi_msg_q, &data, NULL, 0) != osOK)
         {
             data = 0;
         }
         
-        SPIdrv->Transfer(&data, &data_in, 1);
+        SPIdrv->Transfer(&data, &data_in, sizeof(spi_msg_t));
         osEventFlagsWait(spi_evt, ARM_SPI_EVENT_TRANSFER_COMPLETE, osFlagsWaitAny, osWaitForever);
     };
 }
 
-bool spi_set_data(uint16_t _data)
+bool spi_set_data(spi_msg_t _data)
 {
     if (osMessageQueuePut(spi_msg_q, &_data, 0, 0) != osOK)
     {
