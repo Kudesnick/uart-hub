@@ -65,7 +65,7 @@ static void usart_event(uint8_t _n, uint32_t _event);
     extern ARM_DRIVER_USART Driver_USART1;
     static void usart1_event(uint32_t event)
     {
-        usart_event(1, event);
+        usart_event(0, event);
     }
     #undef  UART_CNT
     #define UART_CNT 1
@@ -74,7 +74,7 @@ static void usart_event(uint8_t _n, uint32_t _event);
     extern ARM_DRIVER_USART Driver_USART2;
     static void usart2_event(uint32_t event)
     {
-        usart_event(2, event);
+        usart_event(1, event);
     }
     #undef  UART_CNT
     #define UART_CNT 2
@@ -83,7 +83,7 @@ static void usart_event(uint8_t _n, uint32_t _event);
     extern ARM_DRIVER_USART Driver_USART3;
     static void usart3_event(uint32_t event)
     {
-        usart_event(3, event);
+        usart_event(2, event);
     }
     #undef  UART_CNT
     #define UART_CNT 3
@@ -92,7 +92,7 @@ static void usart_event(uint8_t _n, uint32_t _event);
     extern ARM_DRIVER_USART Driver_USART4;
     static void usart4_event(uint32_t event)
     {
-        usart_event(4, event);
+        usart_event(3, event);
     }
     #undef  UART_CNT
     #define UART_CNT 4
@@ -101,7 +101,7 @@ static void usart_event(uint8_t _n, uint32_t _event);
     extern ARM_DRIVER_USART Driver_USART5;
     static void usart5_event(uint32_t event)
     {
-        usart_event(5, event);
+        usart_event(4, event);
     }
     #undef  UART_CNT
     #define UART_CNT 5
@@ -110,7 +110,7 @@ static void usart_event(uint8_t _n, uint32_t _event);
     extern ARM_DRIVER_USART Driver_USART6;
     static void usart6_event(uint32_t event)
     {
-        usart_event(6, event);
+        usart_event(5, event);
     }
     #undef  UART_CNT
     #define UART_CNT 6
@@ -119,7 +119,7 @@ static void usart_event(uint8_t _n, uint32_t _event);
     extern ARM_DRIVER_USART Driver_USART7;
     static void usart7_event(uint32_t event)
     {
-        usart_event(7, event);
+        usart_event(6, event);
     }
     #undef  UART_CNT
     #define UART_CNT 7
@@ -128,7 +128,7 @@ static void usart_event(uint8_t _n, uint32_t _event);
     extern ARM_DRIVER_USART Driver_USART8;
     static void usart8_event(uint32_t event)
     {
-        usart_event(8, event);
+        usart_event(7, event);
     }
     #undef  UART_CNT
     #define UART_CNT 8
@@ -137,7 +137,7 @@ static void usart_event(uint8_t _n, uint32_t _event);
     extern ARM_DRIVER_USART Driver_USART9;
     static void usart9_event(uint32_t event)
     {
-        usart_event(9, event);
+        usart_event(8, event);
     }
     #undef  UART_CNT
     #define UART_CNT 9
@@ -146,7 +146,7 @@ static void usart_event(uint8_t _n, uint32_t _event);
     extern ARM_DRIVER_USART Driver_USART10;
     static void usart10_event(uint32_t event)
     {
-        usart_event(10, event);
+        usart_event(9, event);
     }
     #undef  UART_CNT
     #define UART_CNT 10
@@ -251,7 +251,8 @@ __INLINE static uint32_t _data_to_mask(const uint32_t _data)
 
 bool spi_get_data(spi_msg_t _data)
 {
-    return (osMessageQueuePut(uart_msg_q, &_data, 0, 0) == osOK);
+    return (_data_to_mask(_data) != 0) ?
+           (osMessageQueuePut(uart_msg_q, &_data, 0, 0) == osOK) : false;
 }
 
 static void usart_event(uint8_t _n, uint32_t _event)
@@ -273,7 +274,7 @@ void uart_thread(void *arg)
     (void)arg;
     
     uart_thr_id = osThreadGetId();
-    uart_msg_q = os_chck_ptr(osMessageQueueNew(QUEUE_CNT, sizeof(uint16_t), NULL));
+    uart_msg_q = os_chck_ptr(osMessageQueueNew(QUEUE_CNT, sizeof(spi_msg_t), NULL));
     
     // Drivers init
     for (uint8_t i = 0; i < UART_CNT; i++)
@@ -331,6 +332,13 @@ void uart_thread(void *arg)
            )
         {
             const uint32_t mask = _data_to_mask(data);
+            
+            if (mask == 0)
+            {
+                data = 0;
+                printf("<uart> Invalid mask.\r\n");
+                continue;
+            }
             
             if (osThreadFlagsWait(mask, osFlagsWaitAll, TOUT_ERR) != osFlagsErrorTimeout)
             {
