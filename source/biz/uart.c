@@ -303,7 +303,7 @@ void uart_thread(void *arg)
             usart_err = drv->Control(ARM_USART_MODE_SINGLE_WIRE |
                                      ARM_USART_DATA_BITS_8      |
                                      ARM_USART_PARITY_NONE      |
-                                     ARM_USART_STOP_BITS_1, 9600);
+                                     ARM_USART_STOP_BITS_1, 115200);
             if (usart_err != ARM_DRIVER_OK)
             {
                 printf("<uart> usart %d Control error: %x08", i, usart_err);
@@ -323,11 +323,8 @@ void uart_thread(void *arg)
     osThreadFlagsSet(uart_thr_id, mask_valid);
 
     // Main cycle
-    for(;;)
+    for(spi_msg_t data = 0;;)
     {
-        
-        spi_msg_t data;
-        
         if (false
             || data != 0
             || osMessageQueueGet(uart_msg_q, &data, NULL, osWaitForever) == osOK
@@ -335,7 +332,7 @@ void uart_thread(void *arg)
         {
             const uint32_t mask = _data_to_mask(data);
             
-            if (osThreadFlagsWait(mask, osFlagsWaitAll, TOUT_ERR) == mask)
+            if (osThreadFlagsWait(mask, osFlagsWaitAll, TOUT_ERR) != osFlagsErrorTimeout)
             {
                 uint8_t start_iface = 0;
                 uint8_t data_cnt = 0;
@@ -346,7 +343,7 @@ void uart_thread(void *arg)
                     {
                         if (mask & (1U << i))
                         {
-                            for(uint8_t data_cnt = 0; data_cnt < TX_BUF_CNT; data_cnt++)
+                            for(data_cnt = 0; data_cnt < TX_BUF_CNT; data_cnt++)
                             {
                                 // Sending firs buffer
                                 uart[i].tx_buf[data_cnt] = data;
@@ -355,12 +352,14 @@ void uart_thread(void *arg)
                                 {
                                     if (_data_to_mask(data) != mask)
                                     {
+                                        data_cnt++;
                                         break;
                                     }
                                 }
                                 else
                                 {
                                     data = 0;
+                                    data_cnt++;
                                     break;
                                 }
                             }
@@ -386,6 +385,7 @@ void uart_thread(void *arg)
             }
             else
             {
+                data = 0;
                 printf("<uart> Sending timeout error.\r\n");
             }
         }
