@@ -44,7 +44,7 @@
 //   <i> Defines the combined global dynamic memory size (Debug Access Port not include)
 //   <i> Default: 0x1000
 #ifndef OS_DYNAMIC_MEM_SIZE
-#define OS_DYNAMIC_MEM_SIZE       0x1000
+#define OS_DYNAMIC_MEM_SIZE       0x4000
 #endif
  
 //   <o>Kernel Tick Frequency [Hz] <1-1000000>
