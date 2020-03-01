@@ -30,6 +30,7 @@
 #include "bsp.h"
 #include "cdc.h"
 #include "spi.h"
+#include "uart.h"
 
 /***************************************************************************************************
  *                                       DEFINITIONS
@@ -71,7 +72,7 @@ static void create_os(const bool _printinfo)
 
         os_chck(osKernelGetInfo(&vers, NULL, 0));
 
-        fprintf(stderr, "<cpp_os> Operation system info:\r\n"
+        printf("<cpp_os> Operation system info:\r\n"
                 "  API version: %d.%d.%d\r\n"
                 "  kernel version: %d.%d.%d\r\n"
                 "  kernel id: " osRtxKernelId "\r\n",
@@ -79,19 +80,20 @@ static void create_os(const bool _printinfo)
                 vers.kernel / 10000000, (vers.kernel % 10000000) / 10000, vers.kernel % 10000);
 
 #ifdef __ARMCC_VERSION
-        fprintf(stderr, "<cpp_os> Compiller version: %d.%d.%d\r\n",
+        printf("<cpp_os> Compiller version: %d.%d.%d\r\n",
                 __ARMCC_VERSION / 1000000,
                 (__ARMCC_VERSION % 1000000) / 10000,
                 __ARMCC_VERSION % 10000);
 #endif
-        fprintf(stderr, "<cpp_os> compilation date and time: " __DATE__ " [" __TIME__ "]\r\n");
+        printf("<cpp_os> compilation date and time: " __DATE__ " [" __TIME__ "]\r\n");
 
     }
 
     os_chck(osKernelInitialize()); // initialize RTX
 
-    os_chck_ptr(osThreadNew(cdc_thread, NULL, NULL));
-    os_chck_ptr(osThreadNew(spi_thread, NULL, NULL));
+    os_chck_ptr(osThreadNew( cdc_thread, NULL, NULL));
+    os_chck_ptr(osThreadNew( spi_thread, NULL, NULL));
+    os_chck_ptr(osThreadNew(uart_thread, NULL, NULL));
 
     os_chck(osKernelStart()); // start RTX kernel
 };
@@ -111,14 +113,14 @@ static void create_os(const bool _printinfo)
 
 int main(void)
 {
-    fprintf(stderr, "\033[31mC\033[32mO\033[33mL\033[34mO\033[35mR\033[42m \033[0m"
+    printf("\033[31mC\033[32mO\033[33mL\033[34mO\033[35mR\033[42m \033[0m"
             "\033[36mT\033[37mE\033[30m\033[47mS\033[0mT\r\n"); // Color test
-    fprintf(stderr, "Runing main function..\r\n");
+    printf("Runing main function..\r\n");
 
-    fprintf(stderr, "BSP init..\r\n");
+    printf("BSP init..\r\n");
     bsp_init();
 
-    fprintf(stderr, "Starting OS..\r\n");
+    printf("Starting OS..\r\n");
 
     create_os(true);
 

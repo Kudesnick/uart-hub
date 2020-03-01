@@ -79,12 +79,12 @@ uint32_t osRtxErrorNotify (uint32_t code, void *object_id)
         
         if (name != NULL)
         {
-             fprintf(stderr, " Name = '%s'.", name);
+             printf(" Name = '%s'.", name);
         }
     }
     else
     {
-        fprintf(stderr, "\r\n");
+        printf("\r\n");
     }
     
     return 0U;
@@ -93,7 +93,7 @@ uint32_t osRtxErrorNotify (uint32_t code, void *object_id)
 /// System hard fault
 void HardFault_Handler(void)
 {
-    fprintf(stderr, "<main> HardFault!\r\n");
+    printf("<main> HardFault!\r\n");
     
     return;
 }

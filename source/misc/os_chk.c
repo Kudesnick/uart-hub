@@ -65,7 +65,7 @@ osStatus_t os_chck(osStatus_t _status)
 {
     if (_status != osOK)
     {
-        fprintf(stderr, "<cpp_os> os_chck not complete.\r\n");
+        printf("<cpp_os> os_chck not complete.\r\n");
     };
 
     return _status;
@@ -75,7 +75,7 @@ void *os_chck_ptr(void *_ptr)
 {
     if (_ptr == NULL)
     {
-        fprintf(stderr, "<cpp_os> os_chck not complete.\r\n");
+        printf("<cpp_os> os_chck not complete.\r\n");
     };
 
     return _ptr;

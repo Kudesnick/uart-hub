@@ -41,7 +41,7 @@
 #define ERR_STR "\033[31mError.\033[0m "
 
 //-- Точка останова
-#define BRK_PTR(msg) fprintf(stderr, ERR_STR msg "\r\n"); __asm__ volatile("bkpt #0")
+#define BRK_PTR(msg) printf(ERR_STR msg "\r\n"); __asm__ volatile("bkpt #0")
 
 /***************************************************************************************************
  *                                       END OF FILE
