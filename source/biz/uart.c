@@ -267,6 +267,11 @@ static void usart_event(uint8_t _n, uint32_t _event)
         spi_set_data((1U << (_n + 8)) | uart[_n].rx_buf);
         uart[_n].drv->Receive(&uart[_n].rx_buf, 1);
     }
+    
+    if (_event & ~ARM_USART_EVENT_SEND_COMPLETE & ~ARM_USART_EVENT_RECEIVE_COMPLETE)
+    {
+        printf("<uart> usart %d event error: %#08x\r\n", _n, _event);
+    }
 }
 
 void uart_thread(void *arg)
@@ -281,43 +286,44 @@ void uart_thread(void *arg)
     {
         ARM_DRIVER_USART *drv = uart[i].drv;
         
-        if (drv != NULL)
+        if (drv == NULL) continue;
+        
+        mask_valid |= 1U << i;
+        
+        uint32_t usart_err;
+        
+        usart_err = drv->Initialize(uart[i].evt);
+        if (usart_err != ARM_DRIVER_OK)
         {
-            mask_valid |= 1U << i;
-            
-            uint32_t usart_err;
-            
-            usart_err = drv->Initialize(uart[i].evt);
-            if (usart_err != ARM_DRIVER_OK)
-            {
-                printf("<uart> usart %d Initialize error: %x08", i, usart_err);
-                osThreadExit();
-            }
-            
-            usart_err = drv->PowerControl(ARM_POWER_FULL);
-            if (usart_err != ARM_DRIVER_OK)
-            {
-                printf("<uart> usart %d PowerControl error: %x08", i, usart_err);
-                osThreadExit();
-            }
-    
-            usart_err = drv->Control(ARM_USART_MODE_SINGLE_WIRE |
-                                     ARM_USART_DATA_BITS_8      |
-                                     ARM_USART_PARITY_NONE      |
-                                     ARM_USART_STOP_BITS_1, 115200);
-            if (usart_err != ARM_DRIVER_OK)
-            {
-                printf("<uart> usart %d Control error: %x08", i, usart_err);
-                osThreadExit();
-            }
-            
-            usart_err = drv->Control(ARM_USART_CONTROL_TX, 1);
-            if (usart_err != ARM_DRIVER_OK)
-            {
-                printf("<uart> usart %d TX Control error: %x08", i, usart_err);
-                osThreadExit();
-            }
+            printf("<uart> usart %d Initialize error: %x08\r\n", i, usart_err);
+            osThreadExit();
         }
+        
+        usart_err = drv->PowerControl(ARM_POWER_FULL);
+        if (usart_err != ARM_DRIVER_OK)
+        {
+            printf("<uart> usart %d PowerControl error: %#08x\r\n", i, usart_err);
+            osThreadExit();
+        }
+    
+        usart_err = drv->Control(ARM_USART_MODE_SINGLE_WIRE |
+                                 ARM_USART_DATA_BITS_8      |
+                                 ARM_USART_PARITY_NONE      |
+                                 ARM_USART_STOP_BITS_1, 115200);
+        if (usart_err != ARM_DRIVER_OK)
+        {
+            printf("<uart> usart %d Control error: %#08x\r\n", i, usart_err);
+            osThreadExit();
+        }
+        
+        usart_err = drv->Control(ARM_USART_CONTROL_TX, 1);
+        if (usart_err != ARM_DRIVER_OK)
+        {
+            printf("<uart> usart %d TX Control error: %#08x\r\n", i, usart_err);
+            osThreadExit();
+        }
+        
+        drv->Receive(&uart[i].rx_buf, 1);
     }
     printf("<uart> ARM_DRIVER_OK\r\n");
 
