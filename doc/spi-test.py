@@ -42,7 +42,7 @@ def ret_parse(data):
     if (1 <= len(buf[channel]) <= 2):
         if data[0] != 0x55:
             print "Parse preamble error!"
-        else if len(buf[channel]) >= 6 and len(buf[channel]) == (buf[channel][3] + 3):
+        elif len(buf[channel]) >= 6 and len(buf[channel]) == (buf[channel][3] + 3):
             #check sum
             chsm = 0
             for i in range(2, buf[channel][3] + 2):
@@ -50,8 +50,8 @@ def ret_parse(data):
 
             if (chsm != buf[channel][-1]):
                 print "Parse checksum error!"
-            else
-                print "ch" str(channel) ":" str(buf[channel])
+            else:
+                print "ch", str(channel), ":", str(buf[channel])
 
             buf[channel].clear()
 
