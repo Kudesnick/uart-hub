@@ -144,9 +144,13 @@ void spi_thread(void* arg)
     {
         spi_msg_t data;
         
-        if (osMessageQueuePut(spi_msg_q, &data, NULL, 0) != osOK)
+        if (osMessageQueueGet(spi_msg_q, &data, NULL, 0) != osOK)
         {
             data = 0;
+        }
+        else
+        {
+            printf("<spi> %#08X\r\n", data);
         }
         
         SPIdrv->Transfer(&data, &data_in, sizeof(spi_msg_t));
