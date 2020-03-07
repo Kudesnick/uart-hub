@@ -13,13 +13,7 @@ def send_frame(ch, data):
     global spi
 
     send_data = [data & 0xff, ch & 0xFF, (ch >> 8) & 0xff, (ch >> 16) & 0xff]
-
-    spi.cshigh = True
-    spi.cshigh = False
-    ret = spi.xfer3(send_data)
-    spi.cshigh = True
-
-    return ret
+    return spi.xfer(send_data)
 
 def ret_parse(data):
     global ch
@@ -68,8 +62,25 @@ def send(ch, data):
 
 spi.bits_per_word = 8 # other value not supported for BCM2835
 spi.lsbfirst = False
+#  cdiv    speed
+#     2    125.0 MHz
+#     4     62.5 MHz
+#     8     31.2 MHz
+#    16     15.6 MHz
+#    32      7.8 MHz
+#    64      3.9 MHz
+#   128     1953 kHz
+#   256      976 kHz
+#   512      488 kHz
+#  1024      244 kHz
+#  2048      122 kHz
+#  4096       61 kHz
+#  8192     30.5 kHz
+# 16384     15.2 kHz
+# 32768     7629 Hz
 spi.max_speed_hz = 16000000 # 63 MHz - MOSI limit, 16 MHz - MISO limit
 spi.mode = 0b00 # CPOL0|CPHA0
+spi.cshigh = False
 
 for i in range(0, 10):
     data = [0x55, 0x55, 0xFE, 0x03, 0x0E, 0x0E]
